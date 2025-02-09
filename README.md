@@ -1,0 +1,2 @@
+# trypy
+try python
