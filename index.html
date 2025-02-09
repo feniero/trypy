@@ -8,14 +8,17 @@
             rel="stylesheet"
             href="https://pyscript.net/snapshots/2024.9.2/core.css"
         />
-        <script
+        <script 
             type="module"
             src="https://pyscript.net/snapshots/2024.9.2/core.js"
         ></script>
     </head>
     <body>
-        <script type="mpy" terminal>
-            print("Hello, world!")
-        </script>
+        <h1>
+            <script type="py">
+                from pyscript import display
+                display("Hello, world!")
+            </script>
+        </h1>
     </body>
 </html>
