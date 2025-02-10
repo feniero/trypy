@@ -55,7 +55,7 @@ if st.button("Calculate Portfolio"):
         st.line_chart(portafogli)
         
         hist_values = np.histogram(
-            portafogli["Portfolio Return"].dropna(), bins=30, alpha=0.7)
+            portafogli["Portfolio Return"].dropna(), bins=30)
 
         st.bar_chart(hist_values)
         
