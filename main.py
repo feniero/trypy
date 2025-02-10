@@ -1,11 +1,8 @@
-import numpy as np
+import streamlit as st
 import pandas as pd
-import yfinance as yf
-import matplotlib.pyplot as plt
-from pyscript import document
 
-arr=np.arange(4)
-
-#send python output to html div
-output_div = document.querySelector("#output")
-output_div.innerText = arr
+st.write("Here's our first attempt at using data to create a table:")
+st.write(pd.DataFrame({
+    'first column': [1, 2, 3, 4],
+    'second column': [10, 20, 30, 40]
+}))
