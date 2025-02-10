@@ -15,7 +15,7 @@ tickers = [ticker.strip().upper() for ticker in tickers.split(";") if ticker.str
 
 #percentage
 pesi = st.text_input("Enter percentage (pointcomma-separated):", "0.33; 0.33; 0.33")
-pesi = [perc.strip().upper() for perc in percentage.split(";") if perc.strip()]
+pesi = [perc.strip().upper() for perc in pesi.split(";") if perc.strip()]
 
 
 # Download historical stock data
