@@ -22,7 +22,7 @@ pesi = [perc.strip().upper() for perc in pesi.split(";") if perc.strip()]
 stocks = yf.download(tickers, start="2018-01-01")["Close"]
 stocks=stocks.interpolate(method="time")
 #####
-portafogli = pd.DataFrame(idex=stocks.index)
+portafogli = pd.DataFrame(index=stocks.index)
 componenti = stocks[tickers].dropna()
 performance = (componenti.shift(-12*5)/componenti)**(1/5)-1
 performance_indice = pd.DataFrame( np.dot(performance,pesi), index=performance.index, colums=["all seasons"] )
