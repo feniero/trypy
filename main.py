@@ -6,7 +6,7 @@ import yfinance as yf
 tickets=["AAPL","ENI.MI","F","MSFT","T","NIO","EPD","GME","GGB","BB"]
 stocks=yf.download(tickets,start="2018-01-01")["Adj Close"]
 stocks.plot(figsize=(20,10))
-st.write(stocks)
+st.write(stocks.plot(figsize=(20,10)))
 
 
 
