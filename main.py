@@ -14,6 +14,8 @@ tickers = [ticker.strip().upper() for ticker in tickers.split(";") if ticker.str
 
 # Download historical stock data
 stocks = yf.download(tickers, start="2018-01-01")["Close"]
+stocks=stocks.interpolate(method="time")
+stocks=( stocks/stocks.iloc[0] )*100
 
 # Plot stock closing prices
 st.subheader("Stock Price Chart")
