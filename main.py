@@ -53,6 +53,17 @@ if st.button("Calculate Portfolio"):
         # Display results
         st.subheader("Portfolio Performance Chart")
         st.line_chart(portafogli)
+        
+        # 📊 Add Histogram
+        st.subheader("Portfolio Return Distribution")
+        fig, ax = plt.subplots()
+        ax.hist(portafogli["Portfolio Return"].dropna(), bins=30, edgecolor="black", alpha=0.7)
+        ax.set_xlabel("Return")
+        ax.set_ylabel("Frequency")
+        ax.set_title("Histogram of Portfolio Returns")
+        st.pyplot(fig)
+
+        st.bar_chart(hist_values)
 
         st.subheader("Portfolio Data")
         st.dataframe(portafogli)
