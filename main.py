@@ -1,6 +1,8 @@
 import streamlit as st
 import yfinance as yf
 import pandas as pd
+
+import numpy.matlib
 import numpy as np
 
 # Streamlit app title
@@ -25,7 +27,7 @@ stocks=stocks.interpolate(method="time")
 portafogli = pd.DataFrame(index=stocks.index)
 componenti = stocks[tickers].dropna()
 performance = (componenti.shift(-12*5)/componenti)**(1/5)-1
-performance_indice = pd.DataFrame( np.dot(performance,pesi), index=performance.index, colums=["all seasons"] )
+performance_indice = pd.DataFrame( np.dot(performance,pesi), index=performance.index, colums=["aa"] )
 portafogli["aa"]=performance_indice.dropna()
 
 #plot portafolgio
