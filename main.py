@@ -23,6 +23,7 @@ st.line_chart(stocks)
 
 # Display raw historical data
 st.subheader("Historical Data")
-st.dataframe(stocks)
+#st.dataframe(stocks)
+st.write(stocks.describe())
 
 
