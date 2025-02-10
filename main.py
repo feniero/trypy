@@ -4,7 +4,7 @@ import pandas as pd
 import yfinance as yf
 
 tickets=["AAPL"]
-stocks=yf.download(tickets,start="2018-01-01")["Adj Close"]
+stocks=yf.download(tickets,start="2018-01-01")["Close"]
 stocks.plot(figsize=(20,10))
 st.write(stocks.plot(figsize=(20,10)))
 
