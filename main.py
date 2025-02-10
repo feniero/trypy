@@ -7,7 +7,7 @@ st.title("Stock Price App")
 
 # User input for ticker symbol
 tickers = st.text_input("Enter stock tickers (pointcomma-separated):", "AAPL; MSFT; GME")
-tickers = [tickers.upper().strip() for ticker in tickers.split(";") if ticker.strip()]
+tickers = [tickers.strip().strip() for ticker in tickers.split(";") if ticker.strip()]
 
 # List of predefined stock tickers
 #tickers = ["AAPL", "ENI.MI", "F", "MSFT", "T", "NIO", "EPD", "GME", "GGB", "BB"]
