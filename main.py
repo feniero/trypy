@@ -58,6 +58,8 @@ portafogli=pd.DataFrame()
 portafogli=roll_returns(portafogli,8,dati, tickers,pesi)
 portafogli
 
+st.line_chart(portafogli)
+
 # Streamlit app title
 #st.title("Stock Portfolio Performance App")
 
