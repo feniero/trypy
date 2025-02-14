@@ -9,7 +9,7 @@ from src.functions import normalize_data
 from src.functions import roll_returns
 
 # Streamlit interface elements
-st.title('Stock Portfolio Analysis')
+st.title('Stock :blue[_Portfolio_] Analysis')
 
 # Input tickers and weights
 tickers_input = st.text_input("Enter tickers (comma separated)", "SPEA.BE,MSTR")
@@ -49,20 +49,23 @@ dati = yf.download(tickers_validi, interval='1mo')["Close"]
 dati = dati.reindex(tickers_validi, axis=1)
 dati.fillna(method="ffill", limit=1, inplace=True)
 
+st.write(f"We got data from {dati.dropna().index[0].strftime("%Y-%m-%d")} and {dati.dropna().index[-1].strftime("%Y-%m-%d")} ")
+
 # Apply data normalization
 dati_normaliz = normalize_data(dati)
-
 # Display normalized data + line chart
-st.write(f"We got datafrom:  {[dati.dropna().index[0],dati.dropna().index[-1]]}")
+st.subheader("Display normalized data")
 dati_normaliz
+st.subheader("Data normalization graph")
 st.line_chart(dati_normaliz)
 
 #rolling ret
 portafogli=pd.DataFrame()
 anni=8
 portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
+st.subheader("Display portfolio return")
 portafogli
-#todo: add "data between xxx e yyyy"
+st.subheader("Rolling return graph")
 st.line_chart(portafogli.dropna(),x_label="Time", y_label="Return")
 
 
