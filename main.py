@@ -76,7 +76,11 @@ hist = px.histogram(portafogli.dropna(),
     opacity=0.4, nbins=80, 
     title="Histogram of Portfolio Returns"
 )
+#highlight  x=0 and highest bar
 hist.add_vline(x=0, line_dash="dash", line_color="red", line_width=2)
+hist_data = px.histogram(portafogli.dropna(), x="Value", nbins=80).data[0]
+hist.add_vline(x=hist_data.x[np.argmax(hist_data.y)], line_dash="solid", line_color="black", line_width=3, 
+              annotation_text="Highest Bar", annotation_position="top")
 # Customize layout
 hist.update_layout(bargap=0.1, xaxis_title="Return", yaxis_title="Frequency")
 
