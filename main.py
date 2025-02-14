@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import yfinance as yf
-import matplotlib.pyplot as plt
+import plotly.express as px
 
 #Import from ./src
 from src.functions import normalize_data
@@ -63,11 +63,23 @@ st.line_chart(dati_normaliz)
 portafogli=pd.DataFrame()
 anni=8
 portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
-st.subheader("Display portfolio return")
+st.subheader("Display portfolio annualized return on {anni} years")
 portafogli
-st.subheader("Rolling return graph")
+
+#line chart return
+st.subheader("Rolling return graph on {anni} years")
 st.line_chart(portafogli.dropna(),x_label="Time", y_label="Return")
 
+#histogram return chart
+fig = px.histogram(portafogli.dropna(), x="Value", color="Asset", 
+    opacity=0.4, nbins=80, 
+    title="Histogram of Portfolio Returns"
+)
+# Customize layout
+fig.update_layout(bargap=0.1, xaxis_title="Value", yaxis_title="Frequency")
+
+# Display in Streamlit
+st.plotly_chart(fig, use_container_width=True)
 
 
 # Streamlit app title
