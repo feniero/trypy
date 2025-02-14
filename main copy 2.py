@@ -14,9 +14,6 @@ st.title('Stock Portfolio Analysis')
 tickers = st.text_input("Enter tickers (comma separated)", "SPEA.BE,MSTR")
 tickers = tickers.split(",")
 
-pesi = st.text_input("Enter weights (comma separated)", "0.4,0.6")
-pesi = [float(x) for x in pesi.split(",")]
-
 # Validate tickers
 tickers_validi = []
 for ticker in tickers:
@@ -24,21 +21,27 @@ for ticker in tickers:
     if not info.empty:
         tickers_validi.append(ticker.strip())
 
-if( (not tickers_validi) or (sum(pesi) != 1) ):
-    if(not tickers_validi):
-        st.warning(f"Tickers not found")
-    else:
-        st.warning(f"Valid tickers found: {', '.join(tickers_validi)} adjust your weights")
+if tickers_validi:
+    # Input weights
+    pesi = st.text_input("Enter weights (comma separated)", "0.4,0.6")
+    pesi = [float(x) for x in pesi.split(",")]
 
-# Download data for valid tickers
-dati = yf.download(tickers_validi, interval='1mo')["Close"]
-dati = dati.reindex(tickers_validi, axis=1)  # Reorder columns to ensure correct order
-dati.fillna(method="ffill", limit=1, inplace=True)  # Forward fill NaN values for 1 period
-# Apply data normalization
-dati_normaliz = normalize_data(dati)
-# Display normalized data in a line chart
-dati_normaliz
-st.line_chart(dati_normaliz)
+    # Check if sum of weights is 100%
+    if sum(pesi) != 1:
+        st.warning(f"### La somma dei pesi deve essere 1. Sistemare i pesi.")
+        st.write(f"Valid tickers found: {', '.join(tickers_validi)}")
+    else:
+        # Download data for valid tickers
+        dati = yf.download(tickers_validi, interval='1mo')["Close"]
+        dati = dati.reindex(tickers_validi, axis=1)  # Reorder columns to ensure correct order
+        dati.fillna(method="ffill", limit=1, inplace=True)  # Forward fill NaN values for 1 period
+        # Apply data normalization
+        dati_normaliz = normalize_data(dati)
+        # Display normalized data in a line chart
+        dati_normaliz
+        st.line_chart(dati_normaliz)
+else:
+    st.warning(f"No valid tickers found. Please check the entered tickers!")
 
 
 
