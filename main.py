@@ -56,11 +56,9 @@ st.line_chart(dati_normaliz)
 #rolling ret
 portafogli=pd.DataFrame()
 portafogli=roll_returns(portafogli,8,dati, tickers,pesi)
-[portafogli.dropna().index[0],portafogli.dropna().index[-1]]
-
 portafogli
 
-st.line_chart(portafogli)
+st.line_chart(portafogli.dropna())
 
 # Streamlit app title
 #st.title("Stock Portfolio Performance App")
