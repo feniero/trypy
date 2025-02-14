@@ -1,3 +1,5 @@
+import streamlit as st
+import numpy as np
 import pandas as pd
 
 #normalized data: start from '100'
