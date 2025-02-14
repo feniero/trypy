@@ -11,35 +11,37 @@ from src.functions import normalize_data
 st.title('Stock Portfolio Analysis')
 
 # Input tickers and weights
-tickers = st.text_input("Enter tickers (comma separated)", "SPEA.BE,MSTR")
-tickers = tickers.split(",")
+tickers_input = st.text_input("Enter tickers (comma separated)", "SPEA.BE,MSTR")
+tickers = [ticker.strip() for ticker in tickers_input.split(",")]
 
-pesi = st.text_input("Enter weights (comma separated)", "0.4,0.6")
-pesi = [float(x) for x in pesi.split(",")]
+weights_input = st.text_input("Enter weights (comma separated)", "0.4,0.6")
+try:
+    pesi = [float(x.strip()) for x in weights_input.split(",")]
+except ValueError:
+    st.error("Invalid weight format. Please enter numbers separated by commas.")
+    st.stop()
 
 # Validate tickers
 tickers_validi = []
 for ticker in tickers:
-    info = yf.Ticker(ticker.strip()).history(period="1mo")
+    info = yf.Ticker(ticker).history(period="1mo")
     if not info.empty:
-        tickers_validi.append(ticker.strip())
+        tickers_validi.append(ticker)
     else:
-        st.error(f"Valid tickers are: {', '.join(tickers_validi)}. Ticker '{(ticker)}' not found.")
-if(sum(pesi) != 1):
-        st.error(f"{len(tickers_validi)} of valid tickers founded. Pls adjust your weights.")
-        dati= None
-else:
-    # Download data for valid tickers
-    dati = yf.download(tickers_validi, interval='1mo')["Close"]
-    dati = dati.reindex(tickers_validi, axis=1)  # Reorder columns to ensure correct order
-    dati.fillna(method="ffill", limit=1, inplace=True)  # Forward fill NaN values for 1 period
+        st.warning(f"⚠️ Ticker '{ticker}' not found or has no data. It will be ignored.")
 
-# Apply data normalization
-dati_normaliz = normalize_data(dati)
-# Display normalized data in a line chart
-dati_normaliz
-st.line_chart(dati_normaliz)
+if not tickers_validi:
+    st.error("❌ No valid tickers found. Please enter at least one valid ticker.")
+    st.stop()
 
+# Validate weights sum
+if len(pesi) != len(tickers_validi):
+    st.error("❌ Number of weights does not match the number of valid tickers. Please adjust.")
+    st.stop()
+
+if sum(pesi) != 1:
+    st.error(f"❌ The sum of weights must be 1. Current sum: {sum(pesi)}. Please adjust your weights.")
+    st.stop()
 
 
 # Streamlit app title

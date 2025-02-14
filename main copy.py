@@ -14,34 +14,32 @@ st.title('Stock Portfolio Analysis')
 tickers = st.text_input("Enter tickers (comma separated)", "SPEA.BE,MSTR")
 tickers = tickers.split(",")
 
+pesi = st.text_input("Enter weights (comma separated)", "0.4,0.6")
+pesi = [float(x) for x in pesi.split(",")]
+
 # Validate tickers
 tickers_validi = []
 for ticker in tickers:
     info = yf.Ticker(ticker.strip()).history(period="1mo")
     if not info.empty:
         tickers_validi.append(ticker.strip())
-
-if tickers_validi:
-    # Input weights
-    pesi = st.text_input("Enter weights (comma separated)", "0.4,0.6")
-    pesi = [float(x) for x in pesi.split(",")]
-
-    # Check if sum of weights is 100%
-    if sum(pesi) != 1:
-        st.warning(f"### La somma dei pesi deve essere 1. Sistemare i pesi.")
-        st.write(f"Valid tickers found: {', '.join(tickers_validi)}")
     else:
-        # Download data for valid tickers
-        dati = yf.download(tickers_validi, interval='1mo')["Close"]
-        dati = dati.reindex(tickers_validi, axis=1)  # Reorder columns to ensure correct order
-        dati.fillna(method="ffill", limit=1, inplace=True)  # Forward fill NaN values for 1 period
-        # Apply data normalization
-        dati_normaliz = normalize_data(dati)
-        # Display normalized data in a line chart
-        dati_normaliz
-        st.line_chart(dati_normaliz)
+        st.error(f"Ticker '{(ticker)}' not found. the other still valid.")
+if( sum(pesi) != 1 ):
+        st.error(f"Pls adjust your weights.")
+        dati= False
 else:
-    st.warning(f"No valid tickers found. Please check the entered tickers!")
+    # Download data for valid tickers
+    dati = yf.download(tickers_validi, interval='1mo')["Close"]
+    dati = dati.reindex(tickers_validi, axis=1)  # Reorder columns to ensure correct order
+    dati.fillna(method="ffill", limit=1, inplace=True)  # Forward fill NaN values for 1 period
+
+if dati:
+    # Apply data normalization
+    dati_normaliz = normalize_data(dati)
+    # Display normalized data in a line chart
+    dati_normaliz
+    st.line_chart(dati_normaliz)
 
 
 
