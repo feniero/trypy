@@ -5,7 +5,8 @@ import yfinance as yf
 #import matplotlib.pyplot as plt
 
 #import from ./src
-from functions import normalize_data
+from src.functions import normalize_data
+#from functions import normalize_data
 
 #tikers and weights
 tickers=["SPEA.BE","MSTR"]
