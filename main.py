@@ -54,7 +54,7 @@ dati_normaliz
 st.line_chart(dati_normaliz)
 
 #rolling ret
-roll_returns(8,dati, tickers)
+roll_returns(8,dati, tickers,pesi)
 
 # Streamlit app title
 #st.title("Stock Portfolio Performance App")
