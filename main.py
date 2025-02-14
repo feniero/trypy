@@ -24,9 +24,9 @@ for ticker in tickers:
     if not info.empty:
         tickers_validi.append(ticker.strip())
     else:
-        st.warning(f"Ticker: {', '.join(tickers_validi)} not found.")
+        st.warning(f"Ticker: {', '.join(ticker)} not found.")
 if(sum(pesi) != 1):
-    st.warning(f"Valid tickers found: {', '.join(tickers_validi)} adjust your weights")
+    st.warning(f"Valid tickers found: {', '.join(tickers_validi)}. Pls adjust your weights.")
 # Download data for valid tickers
 dati = yf.download(tickers_validi, interval='1mo')["Close"]
 dati = dati.reindex(tickers_validi, axis=1)  # Reorder columns to ensure correct order
