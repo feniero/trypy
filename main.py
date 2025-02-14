@@ -24,13 +24,17 @@ for ticker in tickers:
     if not info.empty:
         tickers_validi.append(ticker.strip())
     else:
-        st.warning(f"Ticker: {', '.join(ticker)} not found.")
+        st.warning(f"Ticker: {(ticker)} not found.")
+        st.warning(f"Valid tickers are: {', '.join(tickers_validi)}")
 if(sum(pesi) != 1):
     st.warning(f"Valid tickers found: {', '.join(tickers_validi)}. Pls adjust your weights.")
-# Download data for valid tickers
-dati = yf.download(tickers_validi, interval='1mo')["Close"]
-dati = dati.reindex(tickers_validi, axis=1)  # Reorder columns to ensure correct order
-dati.fillna(method="ffill", limit=1, inplace=True)  # Forward fill NaN values for 1 period
+    dati=0
+else:
+    # Download data for valid tickers
+    dati = yf.download(tickers_validi, interval='1mo')["Close"]
+    dati = dati.reindex(tickers_validi, axis=1)  # Reorder columns to ensure correct order
+    dati.fillna(method="ffill", limit=1, inplace=True)  # Forward fill NaN values for 1 period
+
 # Apply data normalization
 dati_normaliz = normalize_data(dati)
 # Display normalized data in a line chart
