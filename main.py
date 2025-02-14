@@ -2,10 +2,9 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import yfinance as yf
-# import matplotlib.pyplot as plt  # Uncomment if you need plotting functionality
 
 #Import from ./src
-from src.functions import normalize_data
+from src.functions import normalize_data, roll_returns
 
 # Streamlit interface elements
 st.title('Stock Portfolio Analysis')
@@ -45,14 +44,16 @@ if sum(pesi) != 1:
 
 
 dati = yf.download(tickers_validi, interval='1mo')["Close"]
-dati = dati.reindex(tickers_validi, axis=1)  # Reorder columns to ensure correct order
-dati.fillna(method="ffill", limit=1, inplace=True)  # Forward fill NaN values for 1 period
+dati = dati.reindex(tickers_validi, axis=1)
+dati.fillna(method="ffill", limit=1, inplace=True)
 # Apply data normalization
 dati_normaliz = normalize_data(dati)
-# Display normalized data in a line chart
+# Display normalized data + line chart
 dati_normaliz
 st.line_chart(dati_normaliz)
 
+#rolling ret
+roll_returns(8,dati, tickers)
 
 # Streamlit app title
 #st.title("Stock Portfolio Performance App")
