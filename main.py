@@ -48,9 +48,12 @@ if sum(pesi) != 1:
 dati = yf.download(tickers_validi, interval='1mo')["Close"]
 dati = dati.reindex(tickers_validi, axis=1)
 dati.fillna(method="ffill", limit=1, inplace=True)
+
 # Apply data normalization
 dati_normaliz = normalize_data(dati)
+
 # Display normalized data + line chart
+st.write(f"We got datafrom:  {[dati.dropna().index[0],dati.dropna().index[-1]]}")
 dati_normaliz
 st.line_chart(dati_normaliz)
 
@@ -60,18 +63,7 @@ anni=8
 portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
 portafogli
 #todo: add "data between xxx e yyyy"
-st.line_chart(portafogli.dropna())
-
-fig, ax = plt.subplots(figsize=(20, 10))
-portafogli.plot(ax=ax)
-ax.axhline(y=0.000, color='r', linestyle='--')
-# Set title and labels (optional)
-ax.set_title("Portfolio Performance")
-ax.set_ylabel("Value")
-ax.set_xlabel("Date")
-
-# Show the plot in Streamlit
-st.pyplot(fig)
+st.line_chart(portafogli.dropna(),x_label="Time", y_label="Return")
 
 
 
