@@ -54,9 +54,9 @@ st.write(f"We got data from {dati.dropna().index[0].strftime("%Y-%m-%d")} and {d
 # Apply data normalization
 dati_normaliz = normalize_data(dati)
 # Display normalized data + line chart
-st.subheader("Display normalized data")
+st.subheader("Display price normalized data")
 dati_normaliz
-st.subheader("Data normalization graph")
+st.subheader("Data price normalization graph")
 st.line_chart(dati_normaliz)
 
 #rolling ret
@@ -79,10 +79,16 @@ hist = px.histogram(portafogli.dropna(),
 #highlight  x=0 and highest bar
 fig = px.histogram(portafogli.dropna(), nbins=80, title="Histogram of Portfolio Returns", opacity=0.4)
 # Add a vertical line at x = 0
-fig.add_vline(x=0, line_dash="dash", line_color="black", line_width=2)
+fig.add_vline(x=0, line_dash="dash", line_color="red", line_width=2)
 
 # Display the plot in Streamlit
 st.plotly_chart(fig, use_container_width=True)
+
+#describe portfogli
+portafogli.dropna().describe().round(3)
+
+st.subheader(" max Drawdown")
+round(portafogli.dropna().quantile([0.0])*100,2)
 
 
 # Streamlit app title
