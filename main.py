@@ -77,15 +77,28 @@ hist = px.histogram(portafogli.dropna(),
     title="Histogram of Portfolio Returns"
 )
 #highlight  x=0 and highest bar
-hist.add_vline(x=0, line_dash="dash", line_color="red", line_width=2)
-hist_data = px.histogram(portafogli.dropna(), nbins=80).data[0]
-hist.add_vline(x=hist_data.x[np.argmax(hist_data.y)], line_dash="solid", line_color="black", line_width=3, 
-              annotation_text="Highest Bar", annotation_position="top")
-# Customize layout
-hist.update_layout(bargap=0.1, xaxis_title="Return", yaxis_title="Frequency")
+fig = px.histogram(portafogli.dropna(), nbins=80, title="Histogram of Portfolio Returns", opacity=0.4)
 
-# Display in Streamlit
-st.plotly_chart(hist, use_container_width=True)
+# Extract bin data
+hist_data = fig.data[0]
+bin_counts = hist_data.y  # Y-values (frequencies)
+bin_edges = hist_data.x  # X-values (bin centers)
+
+# Find the index of the highest bin
+max_bin_index = np.argmax(bin_counts)
+
+# Change the color of the highest bar by modifying the marker color array
+bar_colors = ['rgba(0, 0, 255, 0.5)'] * len(bin_counts)  # Default bars (blue, semi-transparent)
+bar_colors[max_bin_index] = 'rgba(255, 0, 0, 0.8)'  # Highlight highest bar in red
+
+# Update the histogram to use the new colors
+fig.update_traces(marker=dict(color=bar_colors))
+
+# Add a vertical line at x = 0
+fig.add_vline(x=0, line_dash="dash", line_color="black", line_width=2)
+
+# Display the plot in Streamlit
+st.plotly_chart(fig, use_container_width=True)
 
 
 # Streamlit app title
