@@ -8,9 +8,10 @@ def normalize_data(dati):
 
 #rolling returns with sliding window
 def roll_returns(anni,dati, tickers,pesi):
+    portafogli=pd.DataFrame()
     componenti = dati[tickers].dropna()
     performance = (componenti.shift(-12*anni)/componenti)**(1/anni)-1
-    performance_indice = pd.DataFrame( np.dot(performance,pesi), index=performance.index, columns=["All Seasons"] )
+    performance_indice = pd.DataFrame( np.dot(performance,pesi), index=performance.index, columns=["ptf"] )
     portafogli["ptf"] = performance_indice.dropna()
     
     return (portafogli.dropna(how="all"))
