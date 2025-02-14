@@ -44,6 +44,16 @@ if sum(pesi) != 1:
     st.stop()
 
 
+dati = yf.download(tickers_validi, interval='1mo')["Close"]
+dati = dati.reindex(tickers_validi, axis=1)  # Reorder columns to ensure correct order
+dati.fillna(method="ffill", limit=1, inplace=True)  # Forward fill NaN values for 1 period
+# Apply data normalization
+dati_normaliz = normalize_data(dati)
+# Display normalized data in a line chart
+dati_normaliz
+st.line_chart(dati_normaliz)
+
+
 # Streamlit app title
 #st.title("Stock Portfolio Performance App")
 
