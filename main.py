@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import yfinance as yf
+import matplotlib.pyplot as plt
 
 #Import from ./src
 from src.functions import normalize_data
@@ -55,10 +56,24 @@ st.line_chart(dati_normaliz)
 
 #rolling ret
 portafogli=pd.DataFrame()
-portafogli=roll_returns(portafogli,8,dati, tickers,pesi)
+anni=8
+portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
 portafogli
 #todo: add "data between xxx e yyyy"
 st.line_chart(portafogli.dropna())
+
+fig, ax = plt.subplots(figsize=(20, 10))
+portafogli.plot(ax=ax)
+ax.axhline(y=0.000, color='r', linestyle='--')
+# Set title and labels (optional)
+ax.set_title("Portfolio Performance")
+ax.set_ylabel("Value")
+ax.set_xlabel("Date")
+
+# Show the plot in Streamlit
+st.pyplot(fig)
+
+
 
 # Streamlit app title
 #st.title("Stock Portfolio Performance App")
