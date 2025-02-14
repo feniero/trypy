@@ -24,9 +24,10 @@ for ticker in tickers:
     if not info.empty:
         tickers_validi.append(ticker.strip())
     else:
-        st.error(f"Valid tickers are: {', '.join(tickers_validi)}. Ticker: {(ticker)} not found.")
+        st.error(f"Valid tickers are: {', '.join(tickers_validi)}. Ticker '{(ticker)}' not found.")
 if(sum(pesi) != 1):
-        st.error(f"Valid tickers found: {', '.join(tickers_validi)}. Pls adjust your weights.")
+        st.error(f"{len(tickers_validi)} of valid tickers founded. Pls adjust your weights.")
+        dati= None
 else:
     # Download data for valid tickers
     dati = yf.download(tickers_validi, interval='1mo')["Close"]

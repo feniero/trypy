@@ -1,5 +1,8 @@
 import pandas as pd
 
 def normalize_data(dati):
-    return 100 * dati.dropna() / dati.dropna().iloc[0]
+    if(dati is None):
+        return False
+    else:
+        return 100 * dati.dropna() / dati.dropna().iloc[0]
 
