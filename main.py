@@ -57,7 +57,7 @@ st.line_chart(dati_normaliz)
 portafogli=pd.DataFrame()
 portafogli=roll_returns(portafogli,8,dati, tickers,pesi)
 portafogli
-
+#todo: add "data between xxx e yyyy"
 st.line_chart(portafogli.dropna())
 
 # Streamlit app title
