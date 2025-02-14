@@ -71,7 +71,7 @@ st.subheader("Rolling return graph on {anni} years")
 st.line_chart(portafogli.dropna(),x_label="Time", y_label="Return")
 
 #histogram return chart
-fig = px.histogram(portafogli.dropna(), x="Value", color="Asset", 
+fig = px.histogram(portafogli.dropna(), color="Asset", 
     opacity=0.4, nbins=80, 
     title="Histogram of Portfolio Returns"
 )
