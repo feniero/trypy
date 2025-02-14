@@ -2,37 +2,46 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import yfinance as yf
-#import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt  # Uncomment if you need plotting functionality
 
-#import from ./src
+#Import from ./src
 from src.functions import normalize_data
-#from functions import normalize_data
 
-#tikers and weights
-tickers=["SPEA.BE","MSTR"]
-#controllo ticker valido
+# Streamlit interface elements
+st.title('Stock Portfolio Analysis')
+
+# Input tickers and weights
+tickers = st.text_input("Enter tickers (comma separated)", "SPEA.BE,MSTR")
+tickers = tickers.split(",")
+
+# Validate tickers
 tickers_validi = []
 for ticker in tickers:
-  info = yf.Ticker(ticker).history(period="1mo")
-  if not info.empty:
-    tickers_validi.append(ticker)
+    info = yf.Ticker(ticker.strip()).history(period="1mo")
+    if not info.empty:
+        tickers_validi.append(ticker.strip())
 
-if tickers_validi :
-  # Controllo che somma pesi = 100
-  pesi = [0.4,0.6]
-  if sum(pesi) != 1:
-      st.warning(f"## La somma dei pesi deve essere 100. Numero di ticker validi trovati: '{len(tickers_validi)}', sistema i pesi.###")
-      
-      dati=yf.download(tickers_validi, interval='1mo')["Close"]
-      dati=dati.reindex(tickers_validi, axis=1) # rimetto a posto le colonne che non ho capito perché me le scombina
-      dati.fillna(method="ffill",limit=1,inplace=True) #sistemo i null di 1 -> il prezzo del mese precedente lo replico per il mese successivo solotanto 1 volta (limit=1)
-      portafogli = pd.DataFrame(index=dati.index)
+if tickers_validi:
+    # Input weights
+    pesi = st.text_input("Enter weights (comma separated)", "0.4,0.6")
+    pesi = [float(x) for x in pesi.split(",")]
+
+    # Check if sum of weights is 100%
+    if sum(pesi) != 1:
+        st.warning(f"### La somma dei pesi deve essere 1. Sistemare i pesi.")
+        st.write(f"Valid tickers found: {', '.join(tickers_validi)}")
+    else:
+        # Download data for valid tickers
+        dati = yf.download(tickers_validi, interval='1mo')["Close"]
+        dati = dati.reindex(tickers_validi, axis=1)  # Reorder columns to ensure correct order
+        dati.fillna(method="ffill", limit=1, inplace=True)  # Forward fill NaN values for 1 period
+        # Apply data normalization
+        dati_normaliz = normalize_data(dati)
+        # Display normalized data in a line chart
+        st.line_chart(dati_normaliz)
 else:
-    st.warning(f"not valid ticker!")
+    st.warning(f"No valid tickers found. Please check the entered tickers!")
 
-##main##
-dati_normaliz= normalize_data(dati)
-st.line_chart(dati_normaliz)
 
 
 # Streamlit app title
