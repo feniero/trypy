@@ -38,6 +38,7 @@ if tickers_validi:
         # Apply data normalization
         dati_normaliz = normalize_data(dati)
         # Display normalized data in a line chart
+        dati_normaliz
         st.line_chart(dati_normaliz)
 else:
     st.warning(f"No valid tickers found. Please check the entered tickers!")
