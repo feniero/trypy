@@ -78,22 +78,6 @@ hist = px.histogram(portafogli.dropna(),
 )
 #highlight  x=0 and highest bar
 fig = px.histogram(portafogli.dropna(), nbins=80, title="Histogram of Portfolio Returns", opacity=0.4)
-
-# Extract bin data
-hist_data = fig.data[0]
-bin_counts = hist_data.y  # Y-values (frequencies)
-bin_edges = hist_data.x  # X-values (bin centers)
-
-# Find the index of the highest bin
-max_bin_index = np.argmax(bin_counts)
-
-# Change the color of the highest bar by modifying the marker color array
-bar_colors = ['rgba(0, 0, 255, 0.5)']  # Default bars (blue, semi-transparent)
-bar_colors[max_bin_index] = 'rgba(255, 0, 0, 0.8)'  # Highlight highest bar in red
-
-# Update the histogram to use the new colors
-fig.update_traces(marker=dict(color=bar_colors))
-
 # Add a vertical line at x = 0
 fig.add_vline(x=0, line_dash="dash", line_color="black", line_width=2)
 
