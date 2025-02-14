@@ -27,8 +27,10 @@ for ticker in tickers:
         st.warning(f"Ticker: {(ticker)} not found.")
         st.warning(f"Valid tickers are: {', '.join(tickers_validi)}")
 if(sum(pesi) != 1):
-    st.warning(f"Valid tickers found: {', '.join(tickers_validi)}. Pls adjust your weights.")
-    dati=pd.DataFrame(columns="NULL")
+    try:
+        sum(pesi) != 1
+    except:
+        st.warning(f"Valid tickers found: {', '.join(tickers_validi)}. Pls adjust your weights.")
 else:
     # Download data for valid tickers
     dati = yf.download(tickers_validi, interval='1mo')["Close"]
