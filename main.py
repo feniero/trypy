@@ -88,7 +88,7 @@ bin_edges = hist_data.x  # X-values (bin centers)
 max_bin_index = np.argmax(bin_counts)
 
 # Change the color of the highest bar by modifying the marker color array
-bar_colors = ['rgba(0, 0, 255, 0.5)'] * len(bin_counts)  # Default bars (blue, semi-transparent)
+bar_colors = ['rgba(0, 0, 255, 0.5)']  # Default bars (blue, semi-transparent)
 bar_colors[max_bin_index] = 'rgba(255, 0, 0, 0.8)'  # Highlight highest bar in red
 
 # Update the histogram to use the new colors
