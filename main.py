@@ -71,15 +71,17 @@ st.subheader("Rolling return graph on {anni} years")
 st.line_chart(portafogli.dropna(),x_label="Time", y_label="Return")
 
 #histogram return chart
-fig = px.histogram(portafogli.dropna(), 
+st.subheader("Rolling return :green[histogram] on {anni} years")
+hist = px.histogram(portafogli.dropna(), 
     opacity=0.4, nbins=80, 
     title="Histogram of Portfolio Returns"
 )
+hist.add_vline(x=0, line_dash="dash", line_color="red", line_width=2)
 # Customize layout
-fig.update_layout(bargap=0.1, xaxis_title="Value", yaxis_title="Frequency")
+hist.update_layout(bargap=0.1, xaxis_title="Return", yaxis_title="Frequency")
 
 # Display in Streamlit
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(hist, use_container_width=True)
 
 
 # Streamlit app title
