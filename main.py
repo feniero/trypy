@@ -55,7 +55,7 @@ st.line_chart(dati_normaliz)
 
 #rolling ret
 portafogli=pd.DataFrame()
-portafogli=roll_returns(8,dati, tickers,pesi)
+portafogli=roll_returns(portafogli,8,dati, tickers,pesi)
 portafogli
 
 # Streamlit app title
