@@ -4,7 +4,8 @@ import pandas as pd
 import yfinance as yf
 
 #Import from ./src
-from src.functions import normalize_data, roll_returns
+from src.functions import normalize_data
+from src.functions import roll_returns
 
 # Streamlit interface elements
 st.title('Stock Portfolio Analysis')
