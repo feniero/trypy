@@ -85,7 +85,7 @@ fig.add_vline(x=0, line_dash="dash", line_color="red", line_width=2)
 st.plotly_chart(fig, use_container_width=True)
 
 #describe portfogli
-portafogli.dropna().describe().round(3)
+portafogli.dropna().describe()
 
 st.subheader(" max Drawdown")
 round(portafogli.dropna().quantile([0.0])*100,2)
