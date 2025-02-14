@@ -14,5 +14,5 @@ def roll_returns(anni,dati, tickers,pesi):
     performance_indice = pd.DataFrame( np.dot(performance,pesi), index=performance.index, columns=["ptf"] )
     portafogli["ptf"] = performance_indice.dropna()
     
-    return (portafogli.dropna(how="all"))
+    return (portafogli["ptf"].dropna(how="all"))
 
