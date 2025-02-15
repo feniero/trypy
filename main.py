@@ -89,7 +89,12 @@ st.write("### Portfolio Statistics")
 st.write(portafogli.dropna().describe())
 
 st.subheader(" max Drawdown")
+st.write( round(portafogli.dropna().quantile([0.0])*100,2).iloc[1,1] ) 
+
 st.write(round(portafogli.dropna().quantile([0.0])*100,2))
+
+###############
+#value = dataframe.iloc[2, 1]  # get valueo in Row index 2, Column index 1
 
 
 # Streamlit app title
