@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 import plotly.express as px
+import matplotlib.pyplot as plt
 
 #Import from ./src
 from src.functions import normalize_data
@@ -51,15 +52,14 @@ dati.fillna(method="ffill", limit=1, inplace=True)
 
 st.write(f"We got data from {dati.dropna().index[0].strftime("%Y-%m-%d")} and {dati.dropna().index[-1].strftime("%Y-%m-%d")} ")
 
-# Apply data normalization
+#normalized data
 dati_normaliz = normalize_data(dati)
-# Display normalized data + line chart
 st.subheader("Display price normalized data")
 dati_normaliz
-st.subheader("Data price normalization graph")
-st.line_chart(dati_normaliz)
 
-dn_chart=px.line(dati_normaliz, title='rolling ret')
+#normalized data - chart
+st.subheader("Data price normalization graph")
+dn_chart=px.line(dati_normaliz, title='normalization data')
 dn_chart.update_layout(hovermode="x unified")
 st.plotly_chart(dn_chart, use_container_width=True)
 
@@ -70,24 +70,26 @@ portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
 st.subheader("Display portfolio annualized return on {anni} years")
 portafogli
 
-#line chart rolling return
+#rolling ret - line chart
 st.subheader("Rolling return graph on {anni} years")
 rollretlinechart=px.line(portafogli.dropna(), title='rolling ret')
 rollretlinechart.add_hline(y=0, line_dash="dash", line_color="red", line_width=2)
 rollretlinechart.update_layout(hovermode="x unified")
+rollretlinechart.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: '{:.0%}'.format(y)))
 st.plotly_chart(rollretlinechart, use_container_width=True)
 
-#histogram return chart
+
+
+#rolling ret - hist chart
 st.subheader("Rolling return :green[histogram] on {anni} years")
 hist = px.histogram(portafogli.dropna(), 
     opacity=0.4, nbins=80, 
     title="Histogram of Portfolio Returns"
 )
-# Add a vertical line at x = 0
+hist.update_layout(hovermode="x unified")
 hist.add_vline(x=0, line_dash="dash", line_color="red", line_width=2)
-
-# Display the plot in Streamlit
 st.plotly_chart(hist, use_container_width=True)
+
 
 #describe portfogli
 st.write("### Portfolio Statistics")
