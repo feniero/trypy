@@ -75,8 +75,7 @@ st.subheader("Rolling return graph on {anni} years")
 rollretlinechart=px.line(portafogli.dropna(), title='rolling ret')
 rollretlinechart.add_hline(y=0, line_dash="dash", line_color="red", line_width=2)
 rollretlinechart.update_layout(hovermode="x unified")
-#rollretlinechart.layout.yaxis.tickformat = ',.0%'
-rollretlinechart.layout.yaxis.tickformat = ',0.0%'
+rollretlinechart.layout.yaxis.tickformat = ',.0%'
 st.plotly_chart(rollretlinechart, use_container_width=True)
 
 
@@ -89,6 +88,7 @@ hist = px.histogram(portafogli.dropna(),
 )
 hist.update_layout(hovermode="x unified")
 hist.add_vline(x=0, line_dash="dash", line_color="red", line_width=2)
+hist.layout.xaxis.tickformat = ',.0%'
 st.plotly_chart(hist, use_container_width=True)
 
 
