@@ -18,8 +18,7 @@ tickers = [ticker.strip() for ticker in tickers_input.split(",")]
 
 weights_input = st.text_input("Enter weights (comma separated)", "40,60")
 try:
-    pesi = [float(x.strip()) for x in weights_input.split(",")]
-    pesi=(pesi/100)
+    pesi = [(float(x.strip())/100) for x in weights_input.split(",")]
 except ValueError:
     st.error("Invalid weight format. Please enter numbers separated by commas.")
     st.stop()
