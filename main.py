@@ -106,7 +106,8 @@ try:
     portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
 
     st.subheader(f":pushpin: Display portfolio :green[annualized return] on {anni} years")
-    #st.info('The column "annualized return over period %" are alerady a % value', icon="ℹ️")
+    st.write("A series of annualized returns by month: Imagine you bought on *start date* and sold on *end period date*, which annualized return did you get?")
+    st.write("the annualized returns are already a % value")
     start_dates = portafogli.index
     end_dates = start_dates + pd.DateOffset(years=anni)
     returns = (portafogli*100)
