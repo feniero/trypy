@@ -10,6 +10,8 @@ from src.functions import normalize_data
 from src.functions import roll_returns
 
 # Streamlit interface elements
+st.beta_set_page_config( layout='wide')
+
 st.title('Stock :blue[_Portfolio_] Analysis')
 
 # Input tickers and weights
@@ -58,8 +60,7 @@ st.subheader("Display price normalized data")
 dati_normaliz
 
 ## normalized data - chart
-st.subheader("Data price normalization graph")
-dn_chart=px.line(dati_normaliz, title='normalization data')
+dn_chart=px.line(dati_normaliz, title='normalization data chart')
 dn_chart.update_layout(hovermode="x unified")
 st.plotly_chart(dn_chart, use_container_width=True)
 
