@@ -215,7 +215,7 @@ try:
         )
     )
 
-    st.write(f":face_with_monocle: How to read it: we have the worst case (max drawdown), the return in 10% of worst cases (10% quantile), the  return in 5% of worst cases (5% quantile) and the mean return in that case (mean return on quantile) ")
+    st.write(f":face_with_monocle: How to read it: we have the worst case (max drawdown), the return in 10% of worst cases (10% quantile), the return in 5% of worst cases (5% quantile) and the mean return in that case (mean return on quantile) ")
 except Exception as e:
     st.error(":scream: Failed calculate drawdown statistics...")
     #st.error(f"Error: {e}")
