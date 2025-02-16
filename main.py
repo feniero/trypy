@@ -67,42 +67,24 @@ st.plotly_chart(dn_chart, use_container_width=True)
 portafogli=pd.DataFrame()
 anni=8
 #return each period
-portafogli["return"]=roll_returns(portafogli,anni,dati, tickers,pesi)
-#stdev each period
-monthly_returns = dati.pct_change().dropna()
-
-# Calculate portfolio monthly returns
-portfolio_returns = monthly_returns[tickers].dot(pesi)
-
-# Apply your custom formula for annualized standard deviation
-# First, calculate the variance and mean
-var = portfolio_returns.var()
-mean_one = portfolio_returns.mean() + 1
-
-# Now, apply your formula
-annualized_std_dev = np.sqrt(((var + (mean_one**2))**12) - mean_one**24)
-
-# Add the annualized standard deviation as a new column in the portfolio dataframe
-portafogli["std_dev"] = annualized_std_dev
+portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
 
 st.subheader("Display portfolio annualized return on {anni} years")
 
-start_dates = portafogli["return"].index
+start_dates = portafogli.index
 end_dates = start_dates + pd.DateOffset(years=anni)
-returns = portafogli["return"]
-st_dev= portafogli["std_dev"]
+returns = portafogli
 
 results = pd.DataFrame({
     #"start date": start_dates,
     "end period date": end_dates,
-    "return over period": returns*100,
-    "stdev over period": st_dev*100
+    "return over period": returns*100
 })
 st.dataframe(results)
 
 ## rolling ret - line chart
 st.subheader("Rolling return graph on {anni} years")
-rollretlinechart=px.line(portafogli["return"].dropna(), title='rolling ret')
+rollretlinechart=px.line(portafogli.dropna(), title='rolling ret')
 rollretlinechart.add_hline(y=0, line_dash="dash", line_color="red", line_width=2)
 rollretlinechart.update_layout(hovermode="x unified")
 rollretlinechart.layout.yaxis.tickformat = ',.0%'
@@ -112,7 +94,7 @@ st.plotly_chart(rollretlinechart, use_container_width=True)
 
 #rolling ret - hist chart
 st.subheader("Rolling return :green[histogram] on {anni} years")
-hist = px.histogram(portafogli["return"].dropna(), 
+hist = px.histogram(portafogli.dropna(), 
     opacity=0.4, nbins=80, 
     title="Histogram of Portfolio Returns"
 )
@@ -122,23 +104,37 @@ hist.layout.xaxis.tickformat = ',.0%'
 st.plotly_chart(hist, use_container_width=True)
 
 
-#describe portfogli
+## Portfolio Statistics
 st.write("### Portfolio Statistics")
 #st.write(portafogli.dropna().describe())
 st.write(
     pd.DataFrame(
         [
-            {"option": "number of periods" , "value": portafogli["return"].dropna().describe().iloc[0] },
-            {"option": "mean of return", "value": (portafogli["return"].dropna().describe().iloc[1])*100 },
-            {"option": "standard deviation", "value": (portafogli["return"].dropna().describe().iloc[2])*100 },
+            {"Data over period": "number of periods" , "value": portafogli.dropna().describe().iloc[0] },
+            {"Data over period": "mean of return", "value": (portafogli.dropna().describe().iloc[1])*100 },
+            {"Data over period": "median of return", "value": (portafogli.dropna().describe().iloc[5])*100 },
+            {"Data over period": "standard deviation", "value": (portafogli.dropna().describe().iloc[2])*100 },
+            {"Data over period": "Max return", "value": (portafogli.dropna().describe().iloc[7])*100 },
+            {"Data over period": "Min return", "value": (portafogli.dropna().describe().iloc[3])*100 }
         ]
     )
 )
 
-st.subheader(" max Drawdown")
-#st.write( round(portafogli.dropna().quantile([0.0])*100,2).iloc[1,1] ) 
+## Drawdown
+st.subheader("Drawdown")
+round(portafogli.dropna().quantile([0.0,0.1])*100,2)
+st.write(
+    pd.DataFrame(
+        [
+            {"Data over period": "Worst scenario" , "value": round(portafogli.dropna().quantile([0.0])*100,2) },
+            {"Data over period": "10% quantile", "value": round(portafogli.dropna().quantile([0.1])*100,2)  },
+            {"Data over period": "5% quantile", "value": round(portafogli.dropna().quantile([0.05])*100,2)  }
+        ]
+    )
+)
 
-st.write(round(portafogli["return"].dropna().quantile([0.0])*100,2))
+
+st.write(round(portafogli.dropna().quantile([0.0])*100,2))
 
 ###############
 #value = dataframe.iloc[2, 1]  # get valueo in Row index 2, Column index 1
