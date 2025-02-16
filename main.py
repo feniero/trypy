@@ -13,10 +13,10 @@ from src.functions import roll_returns
 st.title('Stock :blue[_Portfolio_] Analysis')
 
 # Input tickers, weights, years
-tickers_input = st.text_input("Enter tickers (comma separated)", "SPEA.BE,MSTR")
+tickers_input = st.text_input("Enter tickers (comma separated)", "SPEA.BE, MSTR")
 tickers = [ticker.strip() for ticker in tickers_input.split(",")]
 
-weights_input = st.text_input("Enter weights (comma separated)", "40,60")
+weights_input = st.text_input("Enter weights (comma separated)", "40, 60")
 try:
     pesi = [(float(x.strip())/100) for x in weights_input.split(",")]
 except ValueError:
@@ -57,7 +57,7 @@ if len(pesi) != len(tickers_validi):
     st.stop()
 
 if sum(pesi) != 1:
-    st.error(f"❌ The sum of weights must be 1. Current sum: {round(sum(pesi),2)}. Please adjust your weights.")
+    st.error(f"❌ The sum of weights must be 100. Current sum: {( round(sum(pesi),2) )*100}. Please adjust your weights.")
     st.stop()
 
 
