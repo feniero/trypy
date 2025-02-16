@@ -98,10 +98,11 @@ st.write("### Portfolio Statistics")
 #period=(portafogli.dropna().describe().iloc[0])
 st.write(
     pd.DataFrame(
-        {
-            "number of periods": [portafogli.dropna().describe().iloc[0]],
-            "mean of return": [portafogli.dropna().describe().iloc[1]],
-        }
+        [
+            {"command": "count" , "rating": portafogli.dropna().describe().iloc[0] },
+            {"command": "mmm", "rating": portafogli.dropna().describe().iloc[1] },
+            #{"command": "st.time_input", "rating": 3, "is_widget": True},
+        ]
     )
 )
 
