@@ -69,15 +69,19 @@ anni=8
 portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
 st.subheader("Display portfolio annualized return on {anni} years")
 portafogli
-st.write(
-    pd.DataFrame(
-        [
-            {"start date": portafogli.index ,"end date":1, "return": portafogli.dropna().iloc[0] },
-           # {"option": "mean of return", "value": (portafogli.dropna().describe().iloc[1])*100 },
-           # {"option": "standard deviation", "value": (portafogli.dropna().describe().iloc[2])*100 },
-        ]
-    )
-)
+
+start_dates = portafogli.index
+end_dates = start_dates + pd.DateOffset(years=anni)
+returns = portafogli.iloc[:, 0]  # First column (assuming 'ptf' is the first column)
+
+# Create the new DataFrame
+results = pd.DataFrame({
+    "start date": start_dates,
+    "end date": end_dates,
+    "return": returns
+})
+
+st.dataframe(results)
 
 #rolling ret - line chart
 st.subheader("Rolling return graph on {anni} years")
