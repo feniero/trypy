@@ -67,7 +67,7 @@ try:
     dati.fillna(method="ffill", limit=1, inplace=True)
 except Exception as e:
     st.error(":scream: Failed retrieve tickers data..")
-    st.error(f"Error:{e}")
+    st.write(f"Error: {e}")
     st.stop()
 
 st.write(f"We got data from {dati.dropna().index[0].strftime("%Y-%m-%d")} and {dati.dropna().index[-1].strftime("%Y-%m-%d")} ")
