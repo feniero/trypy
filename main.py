@@ -61,9 +61,13 @@ if sum(pesi) != 1:
     st.stop()
 
 
-dati = yf.download(tickers_validi, interval='1mo')["Close"]
-dati = dati.reindex(tickers_validi, axis=1)
-dati.fillna(method="ffill", limit=1, inplace=True)
+try:
+    dati = yf.download(tickers_validi, interval='1mo')["Close"]
+    dati = dati.reindex(tickers_validi, axis=1)
+    dati.fillna(method="ffill", limit=1, inplace=True)
+except ValueError:
+    st.error("Ouch!")
+    st.stop()
 
 st.write(f"We got data from {dati.dropna().index[0].strftime("%Y-%m-%d")} and {dati.dropna().index[-1].strftime("%Y-%m-%d")} ")
 
