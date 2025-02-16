@@ -109,12 +109,12 @@ try:
     #st.info('The column "annualized return over period %" are alerady a % value', icon="ℹ️")
     start_dates = portafogli.index
     end_dates = start_dates + pd.DateOffset(years=anni)
-    returns = portafogli
+    returns = (portafogli*100)
 
     results = pd.DataFrame({
         #"start date": start_dates,
         "end period date": end_dates,
-        "% annualized return over period ": (returns*100)
+        "% annualized return over period ": returns
     })
     st.dataframe(results)
 
