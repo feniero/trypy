@@ -12,27 +12,25 @@ from src.functions import roll_returns
 # Streamlit interface elements
 st.title('Stock :blue[_Portfolio_] Analysis')
 
-# Input tickers and weights
+# Input tickers, weights, years
 tickers_input = st.text_input("Enter tickers (comma separated)", "SPEA.BE,MSTR")
 tickers = [ticker.strip() for ticker in tickers_input.split(",")]
 
-weights_input = st.text_input("Enter weights (comma separated)", "0.4,0.6")
+weights_input = st.text_input("Enter weights (comma separated)", "40,60")
 try:
     pesi = [float(x.strip()) for x in weights_input.split(",")]
+    pesi=(pesi/100)
 except ValueError:
     st.error("Invalid weight format. Please enter numbers separated by commas.")
     st.stop()
 
-anni_input = st.text_input("Enter the rolling ret windows size", "8")
 
-# Validation and handling
+anni_input = st.text_input("Enter the rolling return windows size", "8")
 try:
     if anni_input is None or anni_input == '':
         anni_input = 1
     else:
-        anni_input = int(anni_input)  # Ensure the input is an integer
-
-    # Check if it's within the valid range
+        anni_input = int(anni_input)
     if anni_input < 1 or anni_input > 999:
         st.error("C'mon! Please! enter a value between 1 and 999.")
         st.stop()
