@@ -140,5 +140,5 @@ st.write(
 st.subheader("Sharp Ratio")
 rendimento_bond_a_n_anni=0.045
 st.write(
-    (portafogli.dropna().mean()-rendimento_bond_a_n_anni)/portafogli.dropna().std()
+    round(  (portafogli.dropna().mean()-rendimento_bond_a_n_anni)/portafogli.dropna().std() , 3)
 )
