@@ -94,7 +94,8 @@ st.plotly_chart(hist, use_container_width=True)
 
 #describe portfogli
 st.write("### Portfolio Statistics")
-st.write(portafogli.dropna().describe())
+#st.write(portafogli.dropna().describe())
+st.write(portafogli.dropna().describe().iloc[1,1])
 
 st.subheader(" max Drawdown")
 #st.write( round(portafogli.dropna().quantile([0.0])*100,2).iloc[1,1] ) 
