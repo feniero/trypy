@@ -103,7 +103,7 @@ hist = px.histogram(portafogli.dropna(),
     opacity=0.4, nbins=80, 
     title="Histogram of Portfolio Returns"
 )
-rollretlinechart.update_layout(
+hist.update_layout(
     xaxis_title="Date",
     yaxis_title="Return %",
     hovermode="x unified"
