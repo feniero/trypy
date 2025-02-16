@@ -9,14 +9,16 @@ import matplotlib.pyplot as plt
 from src.functions import normalize_data
 from src.functions import roll_returns
 
-# Streamlit interface elements
+
 st.title('Stock :blue[_Portfolio_] Analysis')
 
-# Input tickers, weights, years
+# Input tickers, weights, years, and risk-free return
 try:
+    # Tickers Input
     tickers_input = st.text_input("Enter tickers (comma separated)", "SPEA.BE, MSTR")
     tickers = [ticker.strip() for ticker in tickers_input.split(",")]
 
+    # Weights Input
     weights_input = st.text_input("Enter weights (comma separated)", "40, 60")
     try:
         pesi = [(float(x.strip())/100) for x in weights_input.split(",")]
@@ -24,7 +26,7 @@ try:
         st.error("Invalid weight format. Please enter numbers separated by commas.")
         st.stop()
 
-
+    # Rolling Return Windows Size Input
     anni_input = st.text_input("Enter the rolling return windows size", "8")
     try:
         if anni_input is None or anni_input == '':
@@ -32,14 +34,27 @@ try:
         else:
             anni_input = int(anni_input)
         if anni_input < 1 or anni_input > 999:
-            st.error("C'mon! Please! enter a value between 1 and 999.")
+            st.error("C'mon! Please enter a value between 1 and 999.")
             st.stop()
-
     except ValueError:
         st.error("Ouch! Invalid input. Please enter a valid number.")
         st.stop()
 
-    # Validate tickers
+    # Risk-Free Return Input
+    rf_input = st.text_input("Enter the risk-free return (%)", "2")
+    try:
+        if rf_input is None or rf_input.strip() == '':
+            rf_input = 0.0
+        else:
+            rf_input = float(rf_input)
+        if rf_input < 0 or rf_input > 100:
+            st.error("Risk-free return must be between 0 and 100%.")
+            st.stop()
+    except ValueError:
+        st.error("Invalid input for risk-free return. Please enter a valid number.")
+        st.stop()
+
+    # Validate Tickers
     tickers_validi = []
     for ticker in tickers:
         info = yf.Ticker(ticker).history(period="1mo")
@@ -52,19 +67,20 @@ try:
         st.error("❌ No valid tickers found. Please enter at least one valid ticker.")
         st.stop()
 
-    # Validate weights sum
+    # Validate Weights
     if len(pesi) != len(tickers_validi):
         st.error("❌ Number of weights does not match the number of valid tickers. Please adjust.")
         st.stop()
 
     if sum(pesi) != 1:
-        st.error(f"❌ The sum of weights must be 100. Current sum: {( round(sum(pesi),2) )*100} Please adjust your weights.")
+        st.error(f"❌ The sum of weights must be 100%. Current sum: {(round(sum(pesi), 2)) * 100}%. Please adjust your weights.")
         st.stop()
 
 except Exception as e:
     st.error(":scream: Unexpected exception...")
-    #st.error(f"Error: {e}")
+    # st.error(f"Error: {e}")
     st.stop()
+
 
 try:
     st.divider()
@@ -105,9 +121,9 @@ try:
     #return each period
     portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
 
-    st.subheader(f":pushpin: Display portfolio :green[annualized return] on {anni} years")
+    st.subheader(f":pushpin: Display portfolio :green[annualized return] over {anni} years")
     st.write("A series of annualized returns by month: Imagine you bought on *start date* and sold on blue[*end period date*, **which annualized return did you get?**")
-    st.write("*the annualized returns are already a % value*")
+    st.write("*the 'annualized returns' are already a % value*")
     start_dates = portafogli.index
     end_dates = start_dates + pd.DateOffset(years=anni)
     returns = (portafogli*100)
@@ -162,7 +178,7 @@ except Exception as e:
 
 ## Portfolio Statistics
 try:
-    st.subheader(":pushpin: Juicy portfolio statistics")
+    st.subheader(f":pushpin: Juicy portfolio statistics over {anni} years")
     st.write(":yum: Some yummy statistics:")
     #st.write(portafogli.dropna().describe())
     st.write(
@@ -198,6 +214,11 @@ try:
             ]
         )
     )
+
+    st.write(f":face_with_monocle: How to read it:
+             we have the worst case (max drawdown), 
+             the 10% of worst cases (10% quantile),
+             the 5% of worst cases (5% quantile) and the mean return in that case (mean return on quantile) ")
 except Exception as e:
     st.error(":scream: Failed calculate drawdown statistics...")
     #st.error(f"Error: {e}")
@@ -205,7 +226,8 @@ except Exception as e:
 
 ## sharpRatio
 try:
-    st.subheader(":pushpin: Sharp Ratio")
+    st.subheader(":pushpin: Sharpe Ratio")
+    st.subheader(f"Sharpe Ratio over period with risk-free rate of return of {rendimento_bond_a_n_anni}")
     rendimento_bond_a_n_anni=0.045
     st.write(
         round(  (portafogli.dropna().mean()-rendimento_bond_a_n_anni)/portafogli.dropna().std() , 3)
