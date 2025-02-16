@@ -126,7 +126,7 @@ except Exception as e:
 
 ## rolling ret - line chart
 try:
-    rollretlinechart=px.line(portafogli.dropna(), title='Rolling return chart <br><sup>Plot Subtitle</sup>')
+    rollretlinechart=px.line(portafogli.dropna(), title="Rolling return chart")
     rollretlinechart.update_layout(
         xaxis_title="Date",
         yaxis_title="Return %",
@@ -135,7 +135,8 @@ try:
     rollretlinechart.add_hline(y=0, line_dash="dash", line_color="red", line_width=2)
     rollretlinechart.layout.yaxis.tickformat = ',.0%'
     st.plotly_chart(rollretlinechart, use_container_width=True)
-
+    
+    st.write(f":face_with_monocle: How to read it: on X axis we have the date when we start investing, on Y axis we have the annualized return reached")
 
 
     #rolling ret - hist chart
@@ -152,6 +153,8 @@ try:
     hist.layout.xaxis.tickformat = ',.0%'
     st.plotly_chart(hist, use_container_width=True)
 
+    st.write(f":face_with_monocle: How to read it: On the X axis we have the % return, on the Y axis we have the number of times it happened.")
+
 except Exception as e:
     st.error(":scream: Failed create rolling charts...")
     #st.error(f"Error: {e}")
@@ -159,7 +162,8 @@ except Exception as e:
 
 ## Portfolio Statistics
 try:
-    st.write(":pushpin: Juicy portfolio statistics")
+    st.subheader(":pushpin: Juicy portfolio statistics")
+    st.write(":yum: Some yummy statistics:")
     #st.write(portafogli.dropna().describe())
     st.write(
         pd.DataFrame(
@@ -181,6 +185,7 @@ except Exception as e:
 ## Drawdown
 try:
     st.subheader(":pushpin: :red[Drawdown] Statistics")
+    st.write(":worried: The painful side...")
     #round(portafogli.dropna().quantile([0.0,0.1])*100,2)
     st.write(
         pd.DataFrame(
