@@ -104,8 +104,8 @@ hist = px.histogram(portafogli.dropna(),
     title="Histogram of Portfolio Returns"
 )
 hist.update_layout(
-    xaxis_title="Date",
-    yaxis_title="Return %",
+    xaxis_title="Return",
+    yaxis_title="# of times",
     hovermode="x unified"
 )
 hist.add_vline(x=0, line_dash="dash", line_color="red", line_width=2)
