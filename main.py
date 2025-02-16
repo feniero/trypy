@@ -226,7 +226,7 @@ try:
     st.subheader(":pushpin: Sharpe Ratio")
     st.write(f"Sharpe Ratio over period with risk-free rate of {rf_input}")
 
-    st.write(f"sharpe ratio over period: **{round( (portafogli.dropna().mean()-rf_input) / portafogli.dropna().std() ,3)}**")
+    st.write(f"sharpe ratio: **{round( (portafogli.dropna().mean()-rf_input) / portafogli.dropna().std() ,3)}**")
 
 except Exception as e:
     st.error(":scream: Failed create sharp ratio...")
