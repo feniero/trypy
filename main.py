@@ -69,7 +69,7 @@ anni=8
 portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
 
 st.subheader("Display portfolio annualized return on {anni} years")
-
+st.info('all returns are %', icon="ℹ️")
 start_dates = portafogli.index
 end_dates = start_dates + pd.DateOffset(years=anni)
 returns = portafogli
@@ -77,7 +77,7 @@ returns = portafogli
 results = pd.DataFrame({
     #"start date": start_dates,
     "end period date": end_dates,
-    "return over period": returns*100
+    "annualized return over period": returns*100
 })
 st.dataframe(results)
 
