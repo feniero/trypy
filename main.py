@@ -68,8 +68,8 @@ anni=8
 #return each period
 portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
 
-st.subheader("Display portfolio annualized return on {anni} years")
-st.info('all returns are %', icon="ℹ️")
+st.subheader(f"Display portfolio :green[annualized return] on {anni} years")
+st.info('The column "annualized return over period %" are alerady a % value', icon="ℹ️")
 start_dates = portafogli.index
 end_dates = start_dates + pd.DateOffset(years=anni)
 returns = portafogli
@@ -77,13 +77,12 @@ returns = portafogli
 results = pd.DataFrame({
     #"start date": start_dates,
     "end period date": end_dates,
-    "annualized return over period": returns*100
+    "annualized return over period %": returns*100
 })
 st.dataframe(results)
 
 ## rolling ret - line chart
-st.subheader("Rolling return graph on {anni} years")
-rollretlinechart=px.line(portafogli.dropna(), title='rolling ret')
+rollretlinechart=px.line(portafogli.dropna(), title='rolling return')
 rollretlinechart.add_hline(y=0, line_dash="dash", line_color="red", line_width=2)
 rollretlinechart.update_layout(hovermode="x unified")
 rollretlinechart.layout.yaxis.tickformat = ',.0%'
@@ -92,7 +91,6 @@ st.plotly_chart(rollretlinechart, use_container_width=True)
 
 
 #rolling ret - hist chart
-st.subheader("Rolling return :green[histogram] on {anni} years")
 hist = px.histogram(portafogli.dropna(), 
     opacity=0.4, nbins=80, 
     title="Histogram of Portfolio Returns"
@@ -120,7 +118,7 @@ st.write(
 )
 
 ## Drawdown
-st.subheader("Drawdown")
+st.subheader(":red[Drawdown] Statistics")
 #round(portafogli.dropna().quantile([0.0,0.1])*100,2)
 st.write(
     pd.DataFrame(
