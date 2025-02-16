@@ -67,6 +67,9 @@ st.plotly_chart(dn_chart, use_container_width=True)
 portafogli=pd.DataFrame()
 anni=8
 portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
+
+portafogli["std_dev"] = portafogli["ptf"].rolling(window=12 * anni).std()
+
 st.subheader("Display portfolio annualized return on {anni} years")
 
 start_dates = portafogli.index
