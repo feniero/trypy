@@ -10,8 +10,10 @@ from src.functions import normalize_data
 from src.functions import roll_returns
 
 
-st.title('Stock :blue[_Portfolio_] Analysis')
-
+st.title("Catchy :blue[_Portfolio_] backtest for data-savvy retail investor")
+st.write("*Disclaimer: This is not financial advice. All content on this application is information of a general nature and does not address the circumstances of anybody. Any reliance you place on such information is strictly at your own risk.*")
+st.wirte("This tool is useful for examining how assets behaved in different periods.\nHere we analyze the distribution rolling returns on a given time.")
+st.write("Let's try to answer the final question: How it is gone if I bought it some time ago?")
 # Input tickers, weights, years, and risk-free return
 try:
     # Tickers Input
