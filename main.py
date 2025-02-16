@@ -224,10 +224,9 @@ except Exception as e:
 ## sharpRatio
 try:
     st.subheader(":pushpin: Sharpe Ratio")
-    st.subheader(f"Sharpe Ratio over period with risk-free rate of return of {rendimento_bond_a_n_anni}")
-    rendimento_bond_a_n_anni=0.045
+    st.subheader(f"Sharpe Ratio over period with risk-free rate of return of {rf_input}")
     st.write(
-        round(  (portafogli.dropna().mean()-rendimento_bond_a_n_anni)/portafogli.dropna().std() , 3)
+        round(  (portafogli.dropna().mean()-rf_input)/portafogli.dropna().std() , 3)
     )
 except Exception as e:
     st.error(":scream: Failed create sharp ratio...")
