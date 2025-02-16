@@ -75,8 +75,8 @@ st.subheader("Rolling return graph on {anni} years")
 rollretlinechart=px.line(portafogli.dropna(), title='rolling ret')
 rollretlinechart.add_hline(y=0, line_dash="dash", line_color="red", line_width=2)
 rollretlinechart.update_layout(hovermode="x unified")
-#rollretlinechart.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: '{:.0%}'.format(y)))
-rollretlinechart.layout.yaxis.tickformat = ',.2f%'
+#rollretlinechart.layout.yaxis.tickformat = ',.0%'
+rollretlinechart.layout.yaxis.tickformat = ',.00%'
 st.plotly_chart(rollretlinechart, use_container_width=True)
 
 
