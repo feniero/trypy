@@ -225,9 +225,10 @@ except Exception as e:
 try:
     st.subheader(":pushpin: Sharpe Ratio")
     st.subheader(f"Sharpe Ratio over period with risk-free rate of return of {rf_input}")
-    st.write(
-        round(  (portafogli.dropna().mean()-rf_input)/portafogli.dropna().std() , 3)
-    )
+    #sharpe_ratio=(portafogli.dropna().mean()-rf_input) / portafogli.dropna().std()
+
+    st.write(f"sharpe ratio verp period:{round( (portafogli.dropna().mean()-rf_input) / portafogli.dropna().std() ,3)}")
+
 except Exception as e:
     st.error(":scream: Failed create sharp ratio...")
     #st.error(f"Error: {e}")
