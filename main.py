@@ -62,28 +62,32 @@ if sum(pesi) != 1:
 
 
 try:
-    dati = yf.download(tickers_validi, interval='1mo')["Close"]
+    dati = yf.download(tickers_validi, interval='1mo')["a Close"]
     dati = dati.reindex(tickers_validi, axis=1)
     dati.fillna(method="ffill", limit=1, inplace=True)
 except ValueError:
     st.error(":scream: Failed retrieve tickers data")
     st.stop()
 
-st.write(f"We :scream: got data from {dati.dropna().index[0].strftime("%Y-%m-%d")} and {dati.dropna().index[-1].strftime("%Y-%m-%d")} ")
+st.write(f"We got data from {dati.dropna().index[0].strftime("%Y-%m-%d")} and {dati.dropna().index[-1].strftime("%Y-%m-%d")} ")
 
 ## normalized data
-dati_normaliz = normalize_data(dati)
-st.subheader("Display price normalized data")
-dati_normaliz
+try:
+    dati_normaliz = normalize_data(dati)
+    st.subheader("Display price normalized data")
+    dati_normaliz
 
-## normalized data - chart
-dn_chart=px.line(dati_normaliz, title='normalization data chart')
-dn_chart.update_layout(
-    xaxis_title="Date",
-    yaxis_title="Price",
-    hovermode="x unified"
-)
-st.plotly_chart(dn_chart, use_container_width=True)
+    ## normalized data - chart
+    dn_chart=px.line(dati_normaliz, title='normalization data chart')
+    dn_chart.update_layout(
+        xaxis_title="Date",
+        yaxis_title="Price",
+        hovermode="x unified"
+    )
+    st.plotly_chart(dn_chart, use_container_width=True)
+except ValueError:
+    st.error(":scream: Failed normalize data")
+    st.stop()
 
 ## rolling ret
 portafogli=pd.DataFrame()
