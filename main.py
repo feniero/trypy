@@ -72,7 +72,7 @@ portafogli
 st.write(
     pd.DataFrame(
         [
-            {"start date": portafogli.dropna().describe().iloc[0] ,"end date":1, "return": portafogli.dropna().describe().iloc[1] },
+            {"start date": portafogli.dropna().iloc[0] ,"end date":1, "return": portafogli.dropna().iloc[1] },
            # {"option": "mean of return", "value": (portafogli.dropna().describe().iloc[1])*100 },
            # {"option": "standard deviation", "value": (portafogli.dropna().describe().iloc[2])*100 },
         ]
