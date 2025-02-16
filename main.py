@@ -34,11 +34,11 @@ try:
 
     # Check if it's within the valid range
     if anni_input < 1 or anni_input > 999:
-        st.error("Please enter a value between 1 and 999.")
+        st.error("C'mon! Please! enter a value between 1 and 999.")
         st.stop()
 
 except ValueError:
-    st.error("Invalid input. Please enter a valid number.")
+    st.error("Ouch! Invalid input. Please enter a valid number.")
     st.stop()
 
 # Validate tickers
