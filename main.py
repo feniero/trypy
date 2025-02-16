@@ -10,8 +10,6 @@ from src.functions import normalize_data
 from src.functions import roll_returns
 
 # Streamlit interface elements
-st.beta_set_page_config( layout='wide')
-
 st.title('Stock :blue[_Portfolio_] Analysis')
 
 # Input tickers and weights
