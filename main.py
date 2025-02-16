@@ -69,6 +69,15 @@ anni=8
 portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
 st.subheader("Display portfolio annualized return on {anni} years")
 portafogli
+st.write(
+    pd.DataFrame(
+        [
+            {"start date": portafogli.dropna().describe().iloc[0] ,"end date":1, "return": portafogli.dropna().describe().iloc[1] },
+           # {"option": "mean of return", "value": (portafogli.dropna().describe().iloc[1])*100 },
+           # {"option": "standard deviation", "value": (portafogli.dropna().describe().iloc[2])*100 },
+        ]
+    )
+)
 
 #rolling ret - line chart
 st.subheader("Rolling return graph on {anni} years")
@@ -95,13 +104,12 @@ st.plotly_chart(hist, use_container_width=True)
 #describe portfogli
 st.write("### Portfolio Statistics")
 #st.write(portafogli.dropna().describe())
-#period=(portafogli.dropna().describe().iloc[0])
 st.write(
     pd.DataFrame(
         [
             {"option": "number of periods" , "value": portafogli.dropna().describe().iloc[0] },
-            {"option": "mean of return", "value": portafogli.dropna().describe().iloc[1] },
-            {"option": "standard deviation", "value": portafogli.dropna().describe().iloc[2] },
+            {"option": "mean of return", "value": (portafogli.dropna().describe().iloc[1])*100 },
+            {"option": "standard deviation", "value": (portafogli.dropna().describe().iloc[2])*100 },
         ]
     )
 )
