@@ -23,6 +23,8 @@ except ValueError:
     st.error("Invalid weight format. Please enter numbers separated by commas.")
     st.stop()
 
+anni_input = st.text_input("Enter the rolling ret windows size", "8")
+
 # Validate tickers
 tickers_validi = []
 for ticker in tickers:
@@ -68,7 +70,7 @@ st.plotly_chart(dn_chart, use_container_width=True)
 
 ## rolling ret
 portafogli=pd.DataFrame()
-anni=8
+anni=anni_input
 #return each period
 portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
 
