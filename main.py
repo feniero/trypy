@@ -74,10 +74,16 @@ monthly_returns = dati.pct_change().dropna()
 # Calculate portfolio monthly returns
 portfolio_returns = monthly_returns[tickers].dot(pesi)
 
-# Calculate the rolling annualized standard deviation over the last 8 years (96 months)
-portafogli["std_dev"] = portfolio_returns.rolling(window=12 * anni).std() * np.sqrt(12)  # Annualized std dev
+# Apply your custom formula for annualized standard deviation
+# First, calculate the variance and mean
+var = portfolio_returns.var()
+mean_one = portfolio_returns.mean() + 1
 
+# Now, apply your formula
+annualized_std_dev = np.sqrt(((var + (mean_one**2))**12) - mean_one**24)
 
+# Add the annualized standard deviation as a new column in the portfolio dataframe
+portafogli["std_dev"] = annualized_std_dev
 
 st.subheader("Display portfolio annualized return on {anni} years")
 
