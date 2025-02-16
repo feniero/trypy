@@ -68,7 +68,10 @@ portafogli
 
 #line chart return
 st.subheader("Rolling return graph on {anni} years")
-st.line_chart(portafogli.dropna(),x_label="Time", y_label="Return")
+#st.line_chart(portafogli.dropna(),x_label="Time", y_label="Return")
+linechart=px.line(portafogli.dropna(), x="year", y="lifeExp", title='Life expectancy in Canada')
+linechart.add_hline(y=0, line_dash="dash", line_color="red", line_width=2)
+st.plotly_chart(linechart, use_container_width=True)
 
 #histogram return chart
 st.subheader("Rolling return :green[histogram] on {anni} years")
