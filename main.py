@@ -15,8 +15,10 @@ st.warning("*Disclaimer: This is not financial advice. All content on this appli
 st.write("This tool is useful for examining how assets behaved in different periods.")
 st.write("Here we analyze the distribution rolling returns on a given time.")
 st.write("Let's try to answer the final question: How it is gone if I bought it some time ago?")
+st.write("<br>")
 # Input tickers, weights, years, and risk-free return
 try:
+    st.subheader(":pushpin: Input data")
     # Tickers Input
     tickers_input = st.text_input("Enter tickers (comma separated)", "SPEA.BE, MSTR")
     tickers = [ticker.strip() for ticker in tickers_input.split(",")]
