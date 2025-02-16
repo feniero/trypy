@@ -52,18 +52,18 @@ dati.fillna(method="ffill", limit=1, inplace=True)
 
 st.write(f"We got data from {dati.dropna().index[0].strftime("%Y-%m-%d")} and {dati.dropna().index[-1].strftime("%Y-%m-%d")} ")
 
-#normalized data
+## normalized data
 dati_normaliz = normalize_data(dati)
 st.subheader("Display price normalized data")
 dati_normaliz
 
-#normalized data - chart
+## normalized data - chart
 st.subheader("Data price normalization graph")
 dn_chart=px.line(dati_normaliz, title='normalization data')
 dn_chart.update_layout(hovermode="x unified")
 st.plotly_chart(dn_chart, use_container_width=True)
 
-#rolling ret
+## rolling ret
 portafogli=pd.DataFrame()
 anni=8
 #return each period
@@ -76,14 +76,17 @@ st.subheader("Display portfolio annualized return on {anni} years")
 start_dates = portafogli["return"].index
 end_dates = start_dates + pd.DateOffset(years=anni)
 returns = portafogli["return"]
+st_dev= portafogli["std_dev"]
+
 results = pd.DataFrame({
     #"start date": start_dates,
     "end period date": end_dates,
-    "return over period": returns*100
+    "return over period": returns*100,
+    "stdev over period": st_dev*100
 })
 st.dataframe(results)
 
-#rolling ret - line chart
+## rolling ret - line chart
 st.subheader("Rolling return graph on {anni} years")
 rollretlinechart=px.line(portafogli["return"].dropna(), title='rolling ret')
 rollretlinechart.add_hline(y=0, line_dash="dash", line_color="red", line_width=2)
