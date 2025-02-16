@@ -12,7 +12,18 @@ from src.functions import roll_returns
 # Streamlit interface elements
 st.title('Stock :blue[_Portfolio_] Analysis')
 
-## years
+# Input tickers, weights, years
+tickers_input = st.text_input("Enter tickers (comma separated)", "SPEA.BE, MSTR")
+tickers = [ticker.strip() for ticker in tickers_input.split(",")]
+
+weights_input = st.text_input("Enter weights (comma separated)", "40, 60")
+try:
+    pesi = [(float(x.strip())/100) for x in weights_input.split(",")]
+except ValueError:
+    st.error("Invalid weight format. Please enter numbers separated by commas.")
+    st.stop()
+
+
 anni_input = st.text_input("Enter the rolling return windows size", "8")
 try:
     if anni_input is None or anni_input == '':
@@ -27,11 +38,7 @@ except ValueError:
     st.error("Ouch! Invalid input. Please enter a valid number.")
     st.stop()
 
-
-## Tickers
-tickers_input = st.text_input("Enter tickers (comma separated)", "SPEA.BE, MSTR")
-tickers = [ticker.strip() for ticker in tickers_input.split(",")]
-
+# Validate tickers
 tickers_validi = []
 for ticker in tickers:
     info = yf.Ticker(ticker).history(period="1mo")
@@ -44,21 +51,13 @@ if not tickers_validi:
     st.error("❌ No valid tickers found. Please enter at least one valid ticker.")
     st.stop()
 
-
-## Weights
-weights_input = st.text_input("Enter weights (comma separated)", "40, 60")
-try:
-    pesi = [(float(x.strip())/100) for x in weights_input.split(",")]
-except ValueError:
-    st.error("Invalid weight format. Please enter numbers separated by commas.")
-    st.stop()
-
+# Validate weights sum
 if len(pesi) != len(tickers_validi):
     st.error("❌ Number of weights does not match the number of valid tickers. Please adjust.")
     st.stop()
 
 if sum(pesi) != 1:
-    st.error(f"❌ The sum of weights must be 100. Current sum: {( round(sum(pesi),2) )*100}... Please adjust your weights.")
+    st.error(f"❌ The sum of weights must be 100. Current sum: {( round(sum(pesi),2) )*100} Please adjust your weights.")
     st.stop()
 
 
