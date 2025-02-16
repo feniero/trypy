@@ -85,7 +85,7 @@ try:
     dati_normaliz
 
     ## normalized data - chart
-    st.write("This is a price chart: you can compare how assets were going through the years.")
+    st.write("Now... price chart! You can compare how assets were going through the years.")
     dn_chart=px.line(dati_normaliz, title='Price normalization chart')
     dn_chart.update_layout(
         xaxis_title="Date",
@@ -106,7 +106,7 @@ try:
     portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
 
     st.subheader(f":pushpin: Display portfolio :green[annualized return] on {anni} years")
-    st.info('The column "annualized return over period %" are alerady a % value', icon="ℹ️")
+    #st.info('The column "annualized return over period %" are alerady a % value', icon="ℹ️")
     start_dates = portafogli.index
     end_dates = start_dates + pd.DateOffset(years=anni)
     returns = portafogli
@@ -114,7 +114,7 @@ try:
     results = pd.DataFrame({
         #"start date": start_dates,
         "end period date": end_dates,
-        "annualized return over period %": returns*100
+        "% annualized return over period ": (returns*100)
     })
     st.dataframe(results)
 
