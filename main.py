@@ -13,13 +13,14 @@ from src.functions import roll_returns
 st.title("Catchy :blue[_Portfolio_] backtest for data-savvy retail investor")
 st.warning("*Disclaimer: This is not financial advice. All content on this application is information of a general nature and does not address the circumstances of anybody. Any reliance you place on such information is strictly at your own risk.*")
 st.write("This tool is useful for examining how assets behaved in different periods.")
-st.write("Here we analyze the distribution rolling returns on a given time.")
-st.write("Let's try to answer the final question: How it is gone if I bought it some time ago?")
+st.write("Here, we analyze the distribution rolling returns on a given time.")
+st.write("Let's try to answer the final question: *How it is gone if I bought it some time ago?*")
 st.text("")
 # Input tickers, weights, years, and risk-free return
 try:
     st.divider()
     st.subheader(":pushpin: Input data")
+    st.write("drop your favorite data")
     # Tickers Input
     tickers_input = st.text_input("Enter tickers (comma separated)", "SPEA.BE, MSTR")
     tickers = [ticker.strip() for ticker in tickers_input.split(",")]
@@ -47,7 +48,7 @@ try:
         st.stop()
 
     # Risk-Free Return Input
-    rf_input = st.text_input("Enter the risk-free return (%)", "2")
+    rf_input = st.text_input("Enter the risk-free return (%). We use it for Sharpe ratio", "2")
     try:
         if rf_input is None or rf_input.strip() == '':
             rf_input = 0.0
