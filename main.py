@@ -76,13 +76,11 @@ hist = px.histogram(portafogli.dropna(),
     opacity=0.4, nbins=80, 
     title="Histogram of Portfolio Returns"
 )
-#highlight  x=0 and highest bar
-fig = px.histogram(portafogli.dropna(), nbins=80, title="Histogram of Portfolio Returns", opacity=0.4)
 # Add a vertical line at x = 0
-fig.add_vline(x=0, line_dash="dash", line_color="red", line_width=2)
+hist.add_vline(x=0, line_dash="dash", line_color="red", line_width=2)
 
 # Display the plot in Streamlit
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(hist, use_container_width=True)
 
 #describe portfogli
 st.write("### Portfolio Statistics")
