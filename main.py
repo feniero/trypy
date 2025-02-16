@@ -122,7 +122,7 @@ st.write(
 
 ## Drawdown
 st.subheader("Drawdown")
-round(portafogli.dropna().quantile([0.0,0.1])*100,2)
+#round(portafogli.dropna().quantile([0.0,0.1])*100,2)
 st.write(
     pd.DataFrame(
         [
