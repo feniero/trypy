@@ -66,16 +66,16 @@ st.plotly_chart(dn_chart, use_container_width=True)
 #rolling ret
 portafogli=pd.DataFrame()
 anni=8
-portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
-
+#return each period
+portafogli["return"]=roll_returns(portafogli,anni,dati, tickers,pesi)
 #stdev each period
 portafogli["std_dev"] = portafogli.rolling(window=12 * anni).std()
 
 st.subheader("Display portfolio annualized return on {anni} years")
 
-start_dates = portafogli.index
+start_dates = portafogli["return"].index
 end_dates = start_dates + pd.DateOffset(years=anni)
-returns = portafogli
+returns = portafogli["return"]
 results = pd.DataFrame({
     #"start date": start_dates,
     "end period date": end_dates,
@@ -85,7 +85,7 @@ st.dataframe(results)
 
 #rolling ret - line chart
 st.subheader("Rolling return graph on {anni} years")
-rollretlinechart=px.line(portafogli.dropna(), title='rolling ret')
+rollretlinechart=px.line(portafogli["return"].dropna(), title='rolling ret')
 rollretlinechart.add_hline(y=0, line_dash="dash", line_color="red", line_width=2)
 rollretlinechart.update_layout(hovermode="x unified")
 rollretlinechart.layout.yaxis.tickformat = ',.0%'
@@ -95,7 +95,7 @@ st.plotly_chart(rollretlinechart, use_container_width=True)
 
 #rolling ret - hist chart
 st.subheader("Rolling return :green[histogram] on {anni} years")
-hist = px.histogram(portafogli.dropna(), 
+hist = px.histogram(portafogli["return"].dropna(), 
     opacity=0.4, nbins=80, 
     title="Histogram of Portfolio Returns"
 )
@@ -111,9 +111,9 @@ st.write("### Portfolio Statistics")
 st.write(
     pd.DataFrame(
         [
-            {"option": "number of periods" , "value": portafogli.dropna().describe().iloc[0] },
-            {"option": "mean of return", "value": (portafogli.dropna().describe().iloc[1])*100 },
-            {"option": "standard deviation", "value": (portafogli.dropna().describe().iloc[2])*100 },
+            {"option": "number of periods" , "value": portafogli["return"].dropna().describe().iloc[0] },
+            {"option": "mean of return", "value": (portafogli["return"].dropna().describe().iloc[1])*100 },
+            {"option": "standard deviation", "value": (portafogli["return"].dropna().describe().iloc[2])*100 },
         ]
     )
 )
@@ -121,7 +121,7 @@ st.write(
 st.subheader(" max Drawdown")
 #st.write( round(portafogli.dropna().quantile([0.0])*100,2).iloc[1,1] ) 
 
-st.write(round(portafogli.dropna().quantile([0.0])*100,2))
+st.write(round(portafogli["return"].dropna().quantile([0.0])*100,2))
 
 ###############
 #value = dataframe.iloc[2, 1]  # get valueo in Row index 2, Column index 1
