@@ -87,8 +87,12 @@ st.dataframe(results)
 
 ## rolling ret - line chart
 rollretlinechart=px.line(portafogli.dropna(), title='rolling return')
+rollretlinechart.update_layout(
+    xaxis_title="Date",
+    yaxis_title="Return %",
+    hovermode="x unified"
+)
 rollretlinechart.add_hline(y=0, line_dash="dash", line_color="red", line_width=2)
-rollretlinechart.update_layout(hovermode="x unified")
 rollretlinechart.layout.yaxis.tickformat = ',.0%'
 st.plotly_chart(rollretlinechart, use_container_width=True)
 
@@ -99,7 +103,11 @@ hist = px.histogram(portafogli.dropna(),
     opacity=0.4, nbins=80, 
     title="Histogram of Portfolio Returns"
 )
-hist.update_layout(hovermode="x unified")
+rollretlinechart.update_layout(
+    xaxis_title="Date",
+    yaxis_title="Return %",
+    hovermode="x unified"
+)
 hist.add_vline(x=0, line_dash="dash", line_color="red", line_width=2)
 hist.layout.xaxis.tickformat = ',.0%'
 st.plotly_chart(hist, use_container_width=True)
