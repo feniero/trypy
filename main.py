@@ -95,12 +95,12 @@ st.plotly_chart(hist, use_container_width=True)
 #describe portfogli
 st.write("### Portfolio Statistics")
 #st.write(portafogli.dropna().describe())
-period=(portafogli.dropna().describe().iloc[0])
+#period=(portafogli.dropna().describe().iloc[0])
 st.write(
     pd.DataFrame(
         {
-            "number of periods": [period],
-            #"mean of return": portafogli.dropna().describe().iloc[1],
+            "number of periods": [portafogli.dropna().describe().iloc[0]],
+            "mean of return": [portafogli.dropna().describe().iloc[1]],
         }
     )
 )
