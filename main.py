@@ -126,15 +126,15 @@ st.subheader("Drawdown")
 st.write(
     pd.DataFrame(
         [
-            {"Data over period": "Worst scenario" , "value": ( round(portafogli.dropna().quantile(0.0)*100,2) ) },
+            {"Data over period": "max drawdown" , "value": ( round(portafogli.dropna().quantile(0.0)*100,2) ) },
             {"Data over period": "10% quantile", "value": round(portafogli.dropna().quantile(0.1)*100,2)  },
-            {"Data over period": "5% quantile", "value": round(portafogli.dropna().quantile(0.05)*100,2)  }
+            {"Data over period": "mean return on 10% quantile", "value": round(portafogli.dropna()[portafogli.dropna()<=portafogli.dropna().quantile(0.1)].mean()*100,2)  },
+            {"Data over period": "5% quantile", "value": round(portafogli.dropna().quantile(0.05)*100,2)  },
+            {"Data over period": "mean return on 5% quantile", "value": round(portafogli.dropna()[portafogli.dropna()<=portafogli.dropna().quantile(0.05)].mean()*100,2)  }
         ]
     )
 )
 
-
-st.write(round(portafogli.dropna().quantile([0.0])*100,2))
 
 ###############
 #value = dataframe.iloc[2, 1]  # get valueo in Row index 2, Column index 1
