@@ -59,6 +59,10 @@ dati_normaliz
 st.subheader("Data price normalization graph")
 st.line_chart(dati_normaliz)
 
+dn_chart=px.line(dati_normaliz, title='rolling ret')
+dn_chart.update_layout(hovermode="x unified")
+st.plotly_chart(dn_chart, use_container_width=True)
+
 #rolling ret
 portafogli=pd.DataFrame()
 anni=8
@@ -66,12 +70,12 @@ portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
 st.subheader("Display portfolio annualized return on {anni} years")
 portafogli
 
-#line chart return
+#line chart rolling return
 st.subheader("Rolling return graph on {anni} years")
-linechart=px.line(portafogli.dropna(), title='rolling ret')
-linechart.add_hline(y=0, line_dash="dash", line_color="red", line_width=2)
-linechart.update_layout(hovermode="x unified")
-st.plotly_chart(linechart, use_container_width=True)
+rollretlinechart=px.line(portafogli.dropna(), title='rolling ret')
+rollretlinechart.add_hline(y=0, line_dash="dash", line_color="red", line_width=2)
+rollretlinechart.update_layout(hovermode="x unified")
+st.plotly_chart(rollretlinechart, use_container_width=True)
 
 #histogram return chart
 st.subheader("Rolling return :green[histogram] on {anni} years")
