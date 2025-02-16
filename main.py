@@ -106,8 +106,8 @@ try:
     portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
 
     st.subheader(f":pushpin: Display portfolio :green[annualized return] on {anni} years")
-    st.write("A series of annualized returns by month: Imagine you bought on *start date* and sold on *end period date*, which annualized return did you get?")
-    st.write("the annualized returns are already a % value")
+    st.write("A series of annualized returns by month: Imagine you bought on *start date* and sold on blue[*end period date*, **which annualized return did you get?**")
+    st.write("*the annualized returns are already a % value*")
     start_dates = portafogli.index
     end_dates = start_dates + pd.DateOffset(years=anni)
     returns = (portafogli*100)
@@ -126,7 +126,7 @@ except Exception as e:
 
 ## rolling ret - line chart
 try:
-    rollretlinechart=px.line(portafogli.dropna(), title='rolling return')   
+    rollretlinechart=px.line(portafogli.dropna(), title='Rolling return chart <br><sup>Plot Subtitle</sup>')
     rollretlinechart.update_layout(
         xaxis_title="Date",
         yaxis_title="Return %",
