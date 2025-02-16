@@ -59,6 +59,8 @@ dati_normaliz
 
 ## normalized data - chart
 dn_chart=px.line(dati_normaliz, title='normalization data chart')
+dn_chart.set_xlabel("Date")
+dn_chart.set_ylabel("Price")
 dn_chart.update_layout(hovermode="x unified")
 st.plotly_chart(dn_chart, use_container_width=True)
 
