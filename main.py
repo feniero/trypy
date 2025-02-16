@@ -66,10 +66,10 @@ try:
     dati = dati.reindex(tickers_validi, axis=1)
     dati.fillna(method="ffill", limit=1, inplace=True)
 except ValueError:
-    st.error("Ouch!")
+    st.error(":scream: Failed retrieve tickers data")
     st.stop()
 
-st.write(f"We got data from {dati.dropna().index[0].strftime("%Y-%m-%d")} and {dati.dropna().index[-1].strftime("%Y-%m-%d")} ")
+st.write(f"We :scream: got data from {dati.dropna().index[0].strftime("%Y-%m-%d")} and {dati.dropna().index[-1].strftime("%Y-%m-%d")} ")
 
 ## normalized data
 dati_normaliz = normalize_data(dati)
