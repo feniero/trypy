@@ -13,74 +13,80 @@ from src.functions import roll_returns
 st.title('Stock :blue[_Portfolio_] Analysis')
 
 # Input tickers, weights, years
-tickers_input = st.text_input("Enter tickers (comma separated)", "SPEA.BE, MSTR")
-tickers = [ticker.strip() for ticker in tickers_input.split(",")]
-
-weights_input = st.text_input("Enter weights (comma separated)", "40, 60")
 try:
-    pesi = [(float(x.strip())/100) for x in weights_input.split(",")]
-except ValueError:
-    st.error("Invalid weight format. Please enter numbers separated by commas.")
-    st.stop()
+    tickers_input = st.text_input("Enter tickers (comma separated)", "SPEA.BE, MSTR")
+    tickers = [ticker.strip() for ticker in tickers_input.split(",")]
 
-
-anni_input = st.text_input("Enter the rolling return windows size", "8")
-try:
-    if anni_input is None or anni_input == '':
-        anni_input = 1
-    else:
-        anni_input = int(anni_input)
-    if anni_input < 1 or anni_input > 999:
-        st.error("C'mon! Please! enter a value between 1 and 999.")
+    weights_input = st.text_input("Enter weights (comma separated)", "40, 60")
+    try:
+        pesi = [(float(x.strip())/100) for x in weights_input.split(",")]
+    except ValueError:
+        st.error("Invalid weight format. Please enter numbers separated by commas.")
         st.stop()
 
-except ValueError:
-    st.error("Ouch! Invalid input. Please enter a valid number.")
+
+    anni_input = st.text_input("Enter the rolling return windows size", "8")
+    try:
+        if anni_input is None or anni_input == '':
+            anni_input = 1
+        else:
+            anni_input = int(anni_input)
+        if anni_input < 1 or anni_input > 999:
+            st.error("C'mon! Please! enter a value between 1 and 999.")
+            st.stop()
+
+    except ValueError:
+        st.error("Ouch! Invalid input. Please enter a valid number.")
+        st.stop()
+
+    # Validate tickers
+    tickers_validi = []
+    for ticker in tickers:
+        info = yf.Ticker(ticker).history(period="1mo")
+        if not info.empty:
+            tickers_validi.append(ticker)
+        else:
+            st.warning(f"⚠️ Ticker '{ticker}' not found or has no data. It will be ignored.")
+
+    if not tickers_validi:
+        st.error("❌ No valid tickers found. Please enter at least one valid ticker.")
+        st.stop()
+
+    # Validate weights sum
+    if len(pesi) != len(tickers_validi):
+        st.error("❌ Number of weights does not match the number of valid tickers. Please adjust.")
+        st.stop()
+
+    if sum(pesi) != 1:
+        st.error(f"❌ The sum of weights must be 100. Current sum: {( round(sum(pesi),2) )*100} Please adjust your weights.")
+        st.stop()
+
+except Exception as e:
+    st.error(":scream: Unexpected exception...")
+    #st.error(f"Error: {e}")
     st.stop()
-
-# Validate tickers
-tickers_validi = []
-for ticker in tickers:
-    info = yf.Ticker(ticker).history(period="1mo")
-    if not info.empty:
-        tickers_validi.append(ticker)
-    else:
-        st.warning(f"⚠️ Ticker '{ticker}' not found or has no data. It will be ignored.")
-
-if not tickers_validi:
-    st.error("❌ No valid tickers found. Please enter at least one valid ticker.")
-    st.stop()
-
-# Validate weights sum
-if len(pesi) != len(tickers_validi):
-    st.error("❌ Number of weights does not match the number of valid tickers. Please adjust.")
-    st.stop()
-
-if sum(pesi) != 1:
-    st.error(f"❌ The sum of weights must be 100. Current sum: {( round(sum(pesi),2) )*100} Please adjust your weights.")
-    st.stop()
-
 
 try:
+    st.divider()
     dati = yf.download(tickers_validi, interval='1mo')["Close"]
     dati = dati.reindex(tickers_validi, axis=1)
     dati.fillna(method="ffill", limit=1, inplace=True)
+    st.write(f"Cool!:sunglasses: We got data from {dati.dropna().index[0].strftime("%Y-%m-%d")} and {dati.dropna().index[-1].strftime("%Y-%m-%d")} ")
 
 except Exception as e:
     st.error(":scream: Failed retrieve tickers data...")
     #st.error(f"Error: {e}")
     st.stop()
 
-st.write(f"We got data from {dati.dropna().index[0].strftime("%Y-%m-%d")} and {dati.dropna().index[-1].strftime("%Y-%m-%d")} ")
-
 ## normalized data
 try:
-    dati_normaliz = normalize_data(dati)
     st.subheader("Display price normalized data")
+    st.write("This is a price chart: you can compare how assets were going through the years.")
+    dati_normaliz = normalize_data(dati)
     dati_normaliz
 
     ## normalized data - chart
-    dn_chart=px.line(dati_normaliz, title='normalization data chart')
+    dn_chart=px.line(dati_normaliz, title='Price normalization chart')
     dn_chart.update_layout(
         xaxis_title="Date",
         yaxis_title="Price",
