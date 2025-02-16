@@ -42,7 +42,7 @@ if len(pesi) != len(tickers_validi):
     st.stop()
 
 if sum(pesi) != 1:
-    st.error(f"❌ The sum of weights must be 1. Current sum: {sum(pesi)}. Please adjust your weights.")
+    st.error(f"❌ The sum of weights must be 1. Current sum: {round(sum(pesi),2)}. Please adjust your weights.")
     st.stop()
 
 
