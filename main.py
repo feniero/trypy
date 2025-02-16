@@ -25,6 +25,22 @@ except ValueError:
 
 anni_input = st.text_input("Enter the rolling ret windows size", "8")
 
+# Validation and handling
+try:
+    if anni_input is None or anni_input == '':
+        anni_input = 1
+    else:
+        anni_input = int(anni_input)  # Ensure the input is an integer
+
+    # Check if it's within the valid range
+    if anni_input < 1 or anni_input > 999:
+        st.error("Please enter a value between 1 and 999.")
+        st.stop()
+
+except ValueError:
+    st.error("Invalid input. Please enter a valid number.")
+    st.stop()
+
 # Validate tickers
 tickers_validi = []
 for ticker in tickers:
