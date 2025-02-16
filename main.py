@@ -224,7 +224,7 @@ except Exception as e:
 ## sharpRatio
 try:
     st.subheader(":pushpin: Sharpe Ratio")
-    st.subheader(f"Sharpe Ratio over period with risk-free rate of return of {rf_input}")
+    st.write(f"Sharpe Ratio over period with risk-free rate of return of {rf_input}")
     #sharpe_ratio=(portafogli.dropna().mean()-rf_input) / portafogli.dropna().std()
 
     st.write(f"sharpe ratio over period: **{round( (portafogli.dropna().mean()-rf_input) / portafogli.dropna().std() ,3)}**")
