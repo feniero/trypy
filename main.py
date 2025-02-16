@@ -72,11 +72,11 @@ portafogli
 
 start_dates = portafogli.index
 end_dates = start_dates + pd.DateOffset(years=anni)
-returns = portafogli["ptf"]  # First column (assuming 'ptf' is the first column)
+returns = portafogli  # First column (assuming 'ptf' is the first column)
 
 # Create the new DataFrame
 results = pd.DataFrame({
-    "start date": start_dates,
+    #"start date": start_dates,
     "end date": end_dates,
     "return": returns
 })
