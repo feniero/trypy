@@ -227,7 +227,7 @@ try:
     st.subheader(f"Sharpe Ratio over period with risk-free rate of return of {rf_input}")
     #sharpe_ratio=(portafogli.dropna().mean()-rf_input) / portafogli.dropna().std()
 
-    st.write(f"sharpe ratio verp period:{round( (portafogli.dropna().mean()-rf_input) / portafogli.dropna().std() ,3)}")
+    st.write(f"sharpe ratio over period: **{round( (portafogli.dropna().mean()-rf_input) / portafogli.dropna().std() ,3)}**")
 
 except Exception as e:
     st.error(":scream: Failed create sharp ratio...")
