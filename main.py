@@ -76,7 +76,7 @@ rollretlinechart=px.line(portafogli.dropna(), title='rolling ret')
 rollretlinechart.add_hline(y=0, line_dash="dash", line_color="red", line_width=2)
 rollretlinechart.update_layout(hovermode="x unified")
 #rollretlinechart.layout.yaxis.tickformat = ',.0%'
-rollretlinechart.layout.yaxis.tickformat = ',.00%'
+rollretlinechart.layout.yaxis.tickformat = ',0.0%'
 st.plotly_chart(rollretlinechart, use_container_width=True)
 
 
