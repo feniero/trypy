@@ -80,12 +80,12 @@ except Exception as e:
 
 ## normalized data
 try:
-    st.subheader("Display price normalized data")
-    st.write("This is a price chart: you can compare how assets were going through the years.")
+    st.subheader(":pushpin: Display price normalized data")
     dati_normaliz = normalize_data(dati)
     dati_normaliz
 
     ## normalized data - chart
+    st.write("This is a price chart: you can compare how assets were going through the years.")
     dn_chart=px.line(dati_normaliz, title='Price normalization chart')
     dn_chart.update_layout(
         xaxis_title="Date",
@@ -105,7 +105,7 @@ try:
     #return each period
     portafogli=roll_returns(portafogli,anni,dati, tickers,pesi)
 
-    st.subheader(f"Display portfolio :green[annualized return] on {anni} years")
+    st.subheader(f":pushpin: Display portfolio :green[annualized return] on {anni} years")
     st.info('The column "annualized return over period %" are alerady a % value', icon="ℹ️")
     start_dates = portafogli.index
     end_dates = start_dates + pd.DateOffset(years=anni)
@@ -158,7 +158,7 @@ except Exception as e:
 
 ## Portfolio Statistics
 try:
-    st.write("### Portfolio Statistics")
+    st.write(":pushpin: Juicy portfolio statistics")
     #st.write(portafogli.dropna().describe())
     st.write(
         pd.DataFrame(
@@ -179,7 +179,7 @@ except Exception as e:
 
 ## Drawdown
 try:
-    st.subheader(":red[Drawdown] Statistics")
+    st.subheader(":pushpin: :red[Drawdown] Statistics")
     #round(portafogli.dropna().quantile([0.0,0.1])*100,2)
     st.write(
         pd.DataFrame(
@@ -199,7 +199,7 @@ except Exception as e:
 
 ## sharpRatio
 try:
-    st.subheader("Sharp Ratio")
+    st.subheader(":pushpin: Sharp Ratio")
     rendimento_bond_a_n_anni=0.045
     st.write(
         round(  (portafogli.dropna().mean()-rendimento_bond_a_n_anni)/portafogli.dropna().std() , 3)
