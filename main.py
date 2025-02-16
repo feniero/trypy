@@ -69,7 +69,15 @@ anni=8
 #return each period
 portafogli["return"]=roll_returns(portafogli,anni,dati, tickers,pesi)
 #stdev each period
-portafogli["std_dev"] = portafogli.rolling(window=12 * anni).std()
+monthly_returns = dati.pct_change().dropna()
+
+# Calculate portfolio monthly returns
+portfolio_returns = monthly_returns[tickers].dot(pesi)
+
+# Calculate the rolling annualized standard deviation over the last 8 years (96 months)
+portafogli["std_dev"] = portfolio_returns.rolling(window=12 * anni).std() * np.sqrt(12)  # Annualized std dev
+
+
 
 st.subheader("Display portfolio annualized return on {anni} years")
 
