@@ -99,9 +99,9 @@ st.write("### Portfolio Statistics")
 st.write(
     pd.DataFrame(
         [
-            {"command": "count" , "rating": portafogli.dropna().describe().iloc[0] },
-            {"command": "mmm", "rating": portafogli.dropna().describe().iloc[1] },
-            #{"command": "st.time_input", "rating": 3, "is_widget": True},
+            {"option": "number of periods" , "value": portafogli.dropna().describe().iloc[0] },
+            {"option": "mean of return", "value": portafogli.dropna().describe().iloc[1] },
+            {"option": "standard deviation", "value": portafogli.dropna().describe().iloc[2] },
         ]
     )
 )
