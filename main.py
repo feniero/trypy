@@ -126,7 +126,7 @@ round(portafogli.dropna().quantile([0.0,0.1])*100,2)
 st.write(
     pd.DataFrame(
         [
-            {"Data over period": "Worst scenario" , "value": round(portafogli.dropna().quantile([0.0])*100,2) },
+            {"Data over period": "Worst scenario" , "value": ( round(portafogli.dropna().quantile([0.0])*100,2) ) },
             {"Data over period": "10% quantile", "value": round(portafogli.dropna().quantile([0.1])*100,2)  },
             {"Data over period": "5% quantile", "value": round(portafogli.dropna().quantile([0.05])*100,2)  }
         ]
