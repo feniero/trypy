@@ -14,7 +14,7 @@ st.title("Catchy :blue[_Portfolio_] backtest for data-savvy retail investor")
 st.warning("*Disclaimer: This is not financial advice. All content on this application is information of a general nature and does not address the circumstances of anybody. Any reliance you place on such information is strictly at your own risk.*")
 st.write("This tool is useful for examining how assets behaved in different periods.")
 st.write("Here, we analyze the distribution rolling returns on a given time.")
-st.write("Let's try to answer the final question: *How it is gone if I bought it some time ago?*")
+st.write("Let's try to answer the final question: *How would it have been if I had bought it a while ago?*")
 st.text("")
 # Input tickers, weights, years, and risk-free return
 try:
